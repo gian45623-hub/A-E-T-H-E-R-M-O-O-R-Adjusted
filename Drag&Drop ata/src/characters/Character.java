@@ -14,6 +14,8 @@ public abstract class Character {
     protected int defense;
     protected int mana;
     protected int maxMana;
+    protected int healthPotions;
+    protected int manaPotions;
     protected List<Skill> skills;
 
     public Character(String name, String title, int hp, int attack, int defense, int mana) {
@@ -25,6 +27,8 @@ public abstract class Character {
         this.defense = defense;
         this.mana = mana;
         this.maxMana = mana;
+        this.healthPotions = 3;
+        this.manaPotions = 3;
         this.skills = new ArrayList<>();
     }
 
@@ -63,10 +67,14 @@ public abstract class Character {
     public int getDefense() { return defense; }
     public int getMana() { return mana; }
     public int getMaxMana() { return maxMana; }
+    public int getHealthPotions() { return healthPotions; }
+    public int getManaPotions() { return manaPotions; }
     public List<Skill> getSkills() { return skills; }
 
     // Setters
     public void setDefense(int defense) { this.defense = defense; }
     public void setMana(int mana) { this.mana = mana; }
     public void setAttackPower(int attackPower) { this.attackPower = attackPower; }
+    public void useHealthPotion() { if (healthPotions > 0) healthPotions--; }
+    public void useManaPotion() { if (manaPotions > 0) manaPotions--; }
 }

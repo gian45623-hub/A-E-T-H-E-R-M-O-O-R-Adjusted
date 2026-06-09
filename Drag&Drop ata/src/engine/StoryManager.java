@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StoryManager {
-    private Party party;
+    private Character player;
     private int currentAct;
     private Map<String, Boolean> flags;
 
-    public StoryManager(Party party) {
-        this.party = party;
+    public StoryManager(Character player) {
+        this.player = player;
         this.currentAct = 1;
         this.flags = new HashMap<>();
     }
@@ -29,18 +29,18 @@ public class StoryManager {
     }
 
     public int getCurrentAct() { return currentAct; }
-    public Party getParty() { return party; }
+    public Character getPlayer() { return player; }
 
     public String determineMageEnding() {
-        return getCharacterEnding(party.getMembers().get(0));
+        return getCharacterEnding(player);
     }
 
     public String determineKnightEnding() {
-        return getCharacterEnding(party.getMembers().get(0));
+        return getCharacterEnding(player);
     }
 
     public String determinePriestEnding() {
-        return getCharacterEnding(party.getMembers().get(0));
+        return getCharacterEnding(player);
     }
 
     public String getCharacterEnding(Character character) {

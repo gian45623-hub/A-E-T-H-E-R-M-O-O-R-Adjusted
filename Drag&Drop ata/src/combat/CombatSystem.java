@@ -9,11 +9,6 @@ import util.Printer;
 public class CombatSystem {
 
     public static boolean startCombat(Character player, Enemy enemy) {
-        // Delegate to PartyBattle using the globally selected party
-        engine.Party party = ui.CharacterSelectPanel.selectedParty;
-        if (party != null && party.getPartySize() > 0) {
-            return PartyBattle.startPartyBattle(party, enemy);
-        }
 
         Printer.printDivider();
         Printer.slowPrint("⚔️   " + player.getName() + "  vs  " + enemy.getName());
@@ -59,13 +54,46 @@ public class CombatSystem {
         System.out.println("  1. Basic Attack");
         System.out.println("  2. Use Skill");
         System.out.println("  3. " + player.getSpecialAbilityName());
+        System.out.println("  4. Use Item");
 
-        int choice = InputHandler.getInt(1, 3);
+        int choice = InputHandler.getInt(1, 4);
 
         switch (choice) {
             case 1 -> basicAttack(player, enemy);
             case 2 -> useSkill(player, enemy);
             case 3 -> player.useSpecialAbility(enemy);
+            case 4 -> useItem(player);
+        }
+    }
+
+    private static void useItem(Character player) {
+        System.out.println("\n  Choose an item:");
+        System.out.println("  1. Health Potion (Heals 50 HP) [x" + player.getHealthPotions() + "]");
+        System.out.println("  2. Mana Potion (Restores 30 Mana) [x" + player.getManaPotions() + "]");
+        System.out.println("  3. Cancel");
+
+        int choice = InputHandler.getInt(1, 3);
+        if (choice == 3) {
+            System.out.println("  " + player.getName() + " hesitates and does nothing.");
+            return;
+        }
+
+        if (choice == 1 && player.getHealthPotions() <= 0) {
+            System.out.println("  No Health Potions left! Turn wasted.");
+            return;
+        } else if (choice == 2 && player.getManaPotions() <= 0) {
+            System.out.println("  No Mana Potions left! Turn wasted.");
+            return;
+        }
+
+        if (choice == 1) {
+            player.useHealthPotion();
+            System.out.println("\n  " + player.getName() + " uses a Health Potion!");
+            player.heal(50);
+        } else {
+            player.useManaPotion();
+            System.out.println("\n  " + player.getName() + " uses a Mana Potion!");
+            player.restoreMana(30);
         }
     }
 

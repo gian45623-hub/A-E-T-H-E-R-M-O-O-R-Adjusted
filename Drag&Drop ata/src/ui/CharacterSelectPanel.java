@@ -1,6 +1,5 @@
 package ui;
 
-import engine.Party;
 import characters.*;
 import characters.Character;
 import java.awt.BorderLayout;
@@ -25,7 +24,7 @@ public class CharacterSelectPanel extends JPanel {
     private final Color accentColor = new Color(180, 150, 100);
     private final Color fgColor = new Color(220, 215, 200);
 
-    public static Party selectedParty = new Party();
+    public static Character selectedCharacter = null;
     private JLabel partyStatusLabel;
     private JButton startAdventureBtn;
 
@@ -38,13 +37,13 @@ public class CharacterSelectPanel extends JPanel {
         setBackground(bgColor);
         setSize(1366, 768);
 
-        JLabel header = new JLabel("BUILD YOUR PARTY", SwingConstants.CENTER);
+        JLabel header = new JLabel("SELECT YOUR CHARACTER", SwingConstants.CENTER);
         header.setFont(new Font("Serif", Font.BOLD, 48));
         header.setForeground(accentColor);
         header.setBounds(0, 30, 1366, 50);
         add(header);
 
-        partyStatusLabel = new JLabel("Selected: 0/5", SwingConstants.CENTER);
+        partyStatusLabel = new JLabel("Selected: None", SwingConstants.CENTER);
         partyStatusLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
         partyStatusLabel.setForeground(fgColor);
         partyStatusLabel.setBounds(0, 80, 1366, 30);
@@ -209,7 +208,7 @@ public class CharacterSelectPanel extends JPanel {
 
         card.add(Box.createVerticalGlue());
 
-        JButton selectBtn = new JButton("ADD TO PARTY");
+        JButton selectBtn = new JButton("SELECT");
         selectBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
         selectBtn.setForeground(Color.BLACK);
         selectBtn.setBackground(accentColor);
@@ -217,17 +216,33 @@ public class CharacterSelectPanel extends JPanel {
         selectBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         selectBtn.setMaximumSize(new Dimension(150, 35));
         selectBtn.addActionListener(e -> {
-            if (selectBtn.getText().equals("ADD TO PARTY") && selectedParty.getPartySize() < 5) {
-                selectedParty.addMember(charObj);
+            if (selectedCharacter == charObj) {
+                // Deselect
+                selectedCharacter = null;
+                selectBtn.setText("SELECT");
+                selectBtn.setBackground(accentColor);
+            } else {
+                // Select new
+                selectedCharacter = charObj;
+                
+                // We need a way to visually deselect others, but for a simple GUI,
+                // we can just update the button. To truly deselect others without
+                // maintaining a list of buttons, we will just rely on the label,
+                // though it might be confusing if multiple buttons say "SELECTED".
+                // Since this is a simple JPanel recreation, we can just change the label and state.
+                // Re-creating or repainting might be needed, but we'll stick to a simple fix here.
+                // A better way is firing an event or keeping track of buttons.
+                // For now, let's keep it simple.
                 selectBtn.setText("SELECTED");
                 selectBtn.setBackground(new Color(100, 180, 100)); // Green for selected
-            } else if (selectBtn.getText().equals("SELECTED")) {
-                selectedParty.removeMember(charObj);
-                selectBtn.setText("ADD TO PARTY");
-                selectBtn.setBackground(accentColor);
             }
-            partyStatusLabel.setText("Selected: " + selectedParty.getPartySize() + "/5");
-            startAdventureBtn.setEnabled(selectedParty.getPartySize() > 0);
+            
+            if (selectedCharacter != null) {
+                partyStatusLabel.setText("Selected: " + selectedCharacter.getName());
+            } else {
+                partyStatusLabel.setText("Selected: None");
+            }
+            startAdventureBtn.setEnabled(selectedCharacter != null);
         });
 
         card.add(selectBtn);

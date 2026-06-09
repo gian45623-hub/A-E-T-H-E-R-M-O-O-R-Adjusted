@@ -20,15 +20,15 @@ public class Main {
             });
 
             showMainMenu();
-            Party party = chooseParty();
+            Character player = chooseCharacter();
 
             // para lumipat ng panel
             javax.swing.SwingUtilities.invokeLater(() -> {
                 ui.MainFrame.getInstance().showPanel("GAME");
             });
 
-            StoryManager storyManager = new StoryManager(party);
-            GameEngine engine = new GameEngine(party, storyManager);
+            StoryManager storyManager = new StoryManager(player);
+            GameEngine engine = new GameEngine(player, storyManager);
             engine.start();
         }).start();
     }
@@ -64,7 +64,7 @@ public class Main {
         }
     }
 
-    private static Party chooseParty() {
+    private static Character chooseCharacter() {
         // para makita character select panel
         javax.swing.SwingUtilities.invokeLater(() -> {
             ui.MainFrame.getInstance().showPanel("SELECT");
@@ -78,8 +78,8 @@ public class Main {
         
         // dito nilalagay sa system properties kung sino yung first character sa party 
         // para malaman ng game engine kung sino yung selected character
-        if (ui.CharacterSelectPanel.selectedParty.getPartySize() > 0) {
-            Character first = ui.CharacterSelectPanel.selectedParty.getMembers().get(0);
+        if (ui.CharacterSelectPanel.selectedCharacter != null) {
+            Character first = ui.CharacterSelectPanel.selectedCharacter;
             if (first instanceof Mage || first instanceof Eryn) {
                 System.setProperty("aethermoor.selectedCharacter", "Mage");
             } else if (first instanceof Knight || first instanceof Brennan) {
@@ -94,6 +94,6 @@ public class Main {
                 System.setProperty("aethermoor.selectedCharacter", "Knight");
             }
         }
-        return ui.CharacterSelectPanel.selectedParty;
+        return ui.CharacterSelectPanel.selectedCharacter;
     }
 }

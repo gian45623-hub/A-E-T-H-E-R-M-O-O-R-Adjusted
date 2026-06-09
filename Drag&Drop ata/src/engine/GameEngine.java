@@ -8,33 +8,32 @@ import util.Printer;
 
 public class GameEngine {
 
-    private Party party;
+    private Character player;
     private StoryManager storyManager;
 
-    public GameEngine(Party party, StoryManager storyManager) {
-        this.party = party;
+    public GameEngine(Character player, StoryManager storyManager) {
+        this.player = player;
         this.storyManager = storyManager;
     }
 
     public void start() {
-        showPartyIntro();
+        showIntro();
         runStory();
     }
 
-    private void showPartyIntro() {
+    private void showIntro() {
         Printer.printDivider();
         Printer.slowPrint("═══════════════════════════════════════════════════");
         Printer.slowPrint("Kingdom of Thaalisia — ten years after the Greying.");
-        Printer.slowPrint("Your party assembles. Five wounds. One conspiracy.");
+        Printer.slowPrint("Your journey begins. One wound. One conspiracy.");
         Printer.slowPrint("═══════════════════════════════════════════════════");
         Printer.printDivider();
-        Printer.slowPrint(party.getPartyStatus());
         InputHandler.waitForEnter();
     }
 
     private void runStory() {
-        if (party.getPartySize() == 0) return;
-        Character leader = party.getMembers().get(0);
+        if (player == null) return;
+        Character leader = player;
 
         if (leader instanceof Eryn || leader instanceof Mage) {
             runMageStory((Mage) leader);
