@@ -208,10 +208,16 @@ public class GamePanel extends JPanel {
     // para sa pag lagay ng background images ng scene para to sa aesthetic HAHAH
     private void paintSceneBackground(Graphics2D g2, int width, int height) {
         String sceneName = currentScene.name().toLowerCase();
-        java.io.File sceneFile = AssetLoader.resolveImageFile("scene_" + sceneName + ".png");
-        java.awt.Image bg = sceneFile != null ? loadImage(sceneFile.getPath()) : null;
-        if (bg == null)
-            bg = loadImage("src/assets/images/scene_" + sceneName + ".png");
+        String resourcePath = "/assets/images/scene_" + sceneName + ".png";
+        if (!cache.containsKey(resourcePath)) {
+            java.net.URL imgURL = getClass().getResource(resourcePath);
+            if (imgURL != null) {
+                cache.put(resourcePath, new javax.swing.ImageIcon(imgURL).getImage());
+            } else {
+                cache.put(resourcePath, null);
+            }
+        }
+        java.awt.Image bg = cache.get(resourcePath);
         if (bg != null) {
             double aspect = (double) bg.getWidth(null) / bg.getHeight(null);
             int dw = width, dh = height;
@@ -335,9 +341,15 @@ public class GamePanel extends JPanel {
             ns = SceneType.VALDENMERE;
             nt = "Valdenmere";
         }
+        
+        boolean sceneChanged = (currentScene != ns);
         currentScene = ns;
         currentSceneTitle = nt;
         sceneLabel.setText(currentSceneTitle);
+        
+        if (sceneChanged) {
+            canvas.repaint();
+        }
     }
 
     // ginagamit to sa update scene from text para alam kung alin yung scene
@@ -375,7 +387,6 @@ public class GamePanel extends JPanel {
             updateSceneFromText(t);
             textArea.append(t);
             textArea.setCaretPosition(textArea.getDocument().getLength());
-            canvas.repaint();
         });
     }
 

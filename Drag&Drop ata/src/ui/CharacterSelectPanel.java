@@ -9,7 +9,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -19,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import util.AssetLoader;
 import util.InputHandler;
 
 public class CharacterSelectPanel extends JPanel {
@@ -141,16 +139,17 @@ public class CharacterSelectPanel extends JPanel {
             JLabel portrait = new JLabel(new ImageIcon(scaled), SwingConstants.CENTER);
             portraitContainer.add(portrait, BorderLayout.CENTER);
         } else {
-            // 1. Load the image safely using the class loader (works everywhere, including JARs)
+            // 1. Load the image safely using the class loader (works everywhere, including
+            // JARs)
             java.net.URL imgURL = getClass().getResource("/assets/images/" + baseImgName + ".png");
-            
+
             if (imgURL != null) {
                 Image rawImg = new ImageIcon(imgURL).getImage();
                 int targetH = 190;
                 int iw = rawImg.getWidth(null);
                 int ih = rawImg.getHeight(null);
                 int targetW = 200;
-            
+
                 if (iw > 0 && ih > 0) {
                     double aspect = (double) iw / ih;
                     targetW = (int) (targetH * aspect);
@@ -159,7 +158,7 @@ public class CharacterSelectPanel extends JPanel {
                         targetH = (int) (targetW / aspect);
                     }
                 }
-            
+
                 Image scaled = rawImg.getScaledInstance(targetW, targetH, Image.SCALE_SMOOTH);
                 JLabel portrait = new JLabel(new ImageIcon(scaled), SwingConstants.CENTER);
                 portraitContainer.add(portrait, BorderLayout.CENTER);
