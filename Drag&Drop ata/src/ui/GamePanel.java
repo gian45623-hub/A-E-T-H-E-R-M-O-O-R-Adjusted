@@ -1,4 +1,5 @@
 package ui;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -175,9 +176,10 @@ public class GamePanel extends JPanel {
                     g.drawImage(bg, 0, 0, getWidth(), getHeight(), null);
                     java.awt.Image chr = new javax.swing.ImageIcon("src/assets/images/char_knight.png").getImage();
                     int charH = (int) (getHeight() * 0.5);
-                    int charW = (int) (charH * ((double)chr.getWidth(null)/chr.getHeight(null)));
-                    g.drawImage(chr, (getWidth() - charW) / 2, (int)(getHeight() * 0.9) - charH, charW, charH, null);
-                } catch (Exception e) {}
+                    int charW = (int) (charH * ((double) chr.getWidth(null) / chr.getHeight(null)));
+                    g.drawImage(chr, (getWidth() - charW) / 2, (int) (getHeight() * 0.9) - charH, charW, charH, null);
+                } catch (Exception e) {
+                }
                 return;
             }
             Graphics2D g2 = (Graphics2D) g.create();
@@ -202,8 +204,6 @@ public class GamePanel extends JPanel {
             g2.dispose();
         }
     }
-
-
 
     // para sa pag lagay ng background images ng scene para to sa aesthetic HAHAH
     private void paintSceneBackground(Graphics2D g2, int width, int height) {
@@ -275,45 +275,6 @@ public class GamePanel extends JPanel {
     // cache para malaman kung nasaan yung image tapos nilalagay sa screen
     private java.util.Map<String, java.awt.Image> cache = new java.util.HashMap<>();
 
-    private java.awt.Image loadImage(String p) {
-        if (!cache.containsKey(p)) {
-            try {
-                java.io.File f = new java.io.File(p);
-                if (f.exists()) {
-                    if (p.toLowerCase().endsWith(".gif")) {
-                        java.awt.Image gif = new javax.swing.ImageIcon(f.getAbsolutePath()).getImage();
-                        cache.put(p, makeTransparent(gif));
-                    } else {
-                        cache.put(p, javax.imageio.ImageIO.read(f));
-                    }
-                } else {
-                    cache.put(p, null);
-                }
-            } catch (Exception e) {
-                cache.put(p, null);
-            }
-        }
-        return cache.get(p);
-    }
-
-    // para ginagamit sa transparency ng image
-    private java.awt.Image makeTransparent(java.awt.Image img) {
-        if (img == null)
-            return null;
-        RGBImageFilter filter = new RGBImageFilter() {
-            public final int filterRGB(int x, int y, int rgb) {
-                int r = (rgb >> 16) & 0xff;
-                int g = (rgb >> 8) & 0xff;
-                int b = rgb & 0xff;
-                if (r > 250 && g > 250 && b > 250)
-                    return 0x00FFFFFF & rgb;
-                return rgb;
-            }
-        };
-        ImageProducer ip = new FilteredImageSource(img.getSource(), filter);
-        return Toolkit.getDefaultToolkit().createImage(ip);
-    }
-
     // update scene from text dapat yung title ng scene, pag sinabi kasing combat
     // dapat combat yung scene, tapos yung scene context dapat yung pinagsama na
     // title + story context para malaman yung scene
@@ -341,12 +302,12 @@ public class GamePanel extends JPanel {
             ns = SceneType.VALDENMERE;
             nt = "Valdenmere";
         }
-        
+
         boolean sceneChanged = (currentScene != ns);
         currentScene = ns;
         currentSceneTitle = nt;
         sceneLabel.setText(currentSceneTitle);
-        
+
         if (sceneChanged) {
             canvas.repaint();
         }
