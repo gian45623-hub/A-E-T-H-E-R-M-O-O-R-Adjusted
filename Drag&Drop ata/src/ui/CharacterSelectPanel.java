@@ -3,7 +3,6 @@ package ui;
 import engine.Party;
 import characters.*;
 import characters.Character;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,7 +10,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.io.File;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,12 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-
 import util.AssetLoader;
 import util.InputHandler;
 
 public class CharacterSelectPanel extends JPanel {
-
     private final Color bgColor = new Color(15, 18, 22);
     private final Color accentColor = new Color(180, 150, 100);
     private final Color fgColor = new Color(220, 215, 200);
@@ -145,20 +141,16 @@ public class CharacterSelectPanel extends JPanel {
             JLabel portrait = new JLabel(new ImageIcon(scaled), SwingConstants.CENTER);
             portraitContainer.add(portrait, BorderLayout.CENTER);
         } else {
-            Image finalImg = null;
-            for (String ext : new String[] { ".png", ".gif" }) {
-                File f = AssetLoader.resolveImageFile(baseImgName + ext);
-                if (f != null) {
-                    finalImg = new ImageIcon(f.getAbsolutePath()).getImage();
-                    break;
-                }
-            }
-
-            if (finalImg != null) {
+            // 1. Load the image safely using the class loader (works everywhere, including JARs)
+            java.net.URL imgURL = getClass().getResource("/assets/images/" + baseImgName + ".png");
+            
+            if (imgURL != null) {
+                Image rawImg = new ImageIcon(imgURL).getImage();
                 int targetH = 190;
-                int iw = finalImg.getWidth(null);
-                int ih = finalImg.getHeight(null);
+                int iw = rawImg.getWidth(null);
+                int ih = rawImg.getHeight(null);
                 int targetW = 200;
+            
                 if (iw > 0 && ih > 0) {
                     double aspect = (double) iw / ih;
                     targetW = (int) (targetH * aspect);
@@ -167,10 +159,12 @@ public class CharacterSelectPanel extends JPanel {
                         targetH = (int) (targetW / aspect);
                     }
                 }
-                Image scaled = finalImg.getScaledInstance(targetW, targetH, Image.SCALE_SMOOTH);
+            
+                Image scaled = rawImg.getScaledInstance(targetW, targetH, Image.SCALE_SMOOTH);
                 JLabel portrait = new JLabel(new ImageIcon(scaled), SwingConstants.CENTER);
                 portraitContainer.add(portrait, BorderLayout.CENTER);
             } else {
+                System.err.println("Could not find file: /assets/images/" + baseImgName + ".png");
                 JLabel missing = new JLabel("[Portrait Missing]", SwingConstants.CENTER);
                 missing.setForeground(Color.GRAY);
                 portraitContainer.add(missing, BorderLayout.CENTER);
