@@ -27,6 +27,7 @@ public class CharacterSelectPanel extends JPanel {
     public static Character selectedCharacter = null;
     private JLabel partyStatusLabel;
     private JButton startAdventureBtn;
+    private java.util.List<JButton> selectionButtons = new java.util.ArrayList<>();
 
     public CharacterSelectPanel() {
         initialize();
@@ -225,14 +226,12 @@ public class CharacterSelectPanel extends JPanel {
                 // Select new
                 selectedCharacter = charObj;
                 
-                // We need a way to visually deselect others, but for a simple GUI,
-                // we can just update the button. To truly deselect others without
-                // maintaining a list of buttons, we will just rely on the label,
-                // though it might be confusing if multiple buttons say "SELECTED".
-                // Since this is a simple JPanel recreation, we can just change the label and state.
-                // Re-creating or repainting might be needed, but we'll stick to a simple fix here.
-                // A better way is firing an event or keeping track of buttons.
-                // For now, let's keep it simple.
+                // Visually deselect all other buttons
+                for (JButton btn : selectionButtons) {
+                    btn.setText("SELECT");
+                    btn.setBackground(accentColor);
+                }
+                
                 selectBtn.setText("SELECTED");
                 selectBtn.setBackground(new Color(100, 180, 100)); // Green for selected
             }
@@ -245,6 +244,7 @@ public class CharacterSelectPanel extends JPanel {
             startAdventureBtn.setEnabled(selectedCharacter != null);
         });
 
+        selectionButtons.add(selectBtn);
         card.add(selectBtn);
         card.add(Box.createRigidArea(new Dimension(0, 15)));
 

@@ -12,7 +12,9 @@ public class MainFrame {
     private JFrame frame;
     private CardLayout cardLayout;
     private JPanel mainPanel;
-    // dito start ang main frame ng game para sa card layout at pag lipat lipat ng panel/scene
+
+    // dito start ang main frame ng game para sa card layout at pag lipat lipat ng
+    // panel/scene
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
@@ -23,6 +25,7 @@ public class MainFrame {
             }
         });
     }
+
     public static MainFrame getInstance() {
         if (instance == null) {
             instance = new MainFrame();
@@ -34,6 +37,7 @@ public class MainFrame {
         initialize();
         instance = this;
     }
+
     // eto naman yung pag initialize para sa card layout at pag lipat ng panel
     /**
      * @wbp.parser.entryPoint
@@ -58,18 +62,22 @@ public class MainFrame {
 
         frame.getContentPane().add(wrapperPanel);
     }
+
     // eto naman yung pag add ng panel para sa card layout
     public void addPanel(JPanel panel, String name) {
         mainPanel.add(panel, name);
     }
+
     // eto naman yung pag show ng panel para sa card layout
     public void showPanel(String name) {
         cardLayout.show(mainPanel, name);
     }
+
     // eto naman yung pag set ng visibility ng frame para sa card layout
     public void setVisible(boolean b) {
         frame.setVisible(b);
     }
+
     // eto naman yung pag get ng frame para sa card layout
     public JFrame getFrame() {
         return frame;

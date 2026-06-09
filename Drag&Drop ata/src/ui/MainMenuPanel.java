@@ -1,13 +1,10 @@
 package ui;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,7 +16,6 @@ import util.InputHandler;
 // eto naman yung main menu panel ng game para sa card layout at pag lipat ng panel (Start, Credits, Exit)
 public class MainMenuPanel extends JPanel {
 
-   
     private final Color accentColor = new Color(180, 150, 100);
     private final Color fgColor = new Color(220, 215, 200);
 
