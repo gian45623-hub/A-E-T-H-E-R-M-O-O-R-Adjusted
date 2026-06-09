@@ -1,0 +1,126 @@
+AETHERMOOR CHARACTER STORY BIBLE
+
+CORE PREMISE
+Aethermoor was broken ten years ago by an event called The Greying. The world is still wounded: Ashen creatures, corrupted relics, collapsing orders, and powerful institutions hiding the truth. Each main character starts separate, carrying a personal wound tied to the Greying, and their stories slowly point toward the same conspiracy.
+
+ERYN VOSS
+Name: Eryn Voss
+Class: Mage
+Title: The Exiled Scholar
+Role: High-damage magic user with dangerous uncontrolled power
+
+Eryn was once a brilliant arcane scholar who believed the official explanation of the Greying was a lie. No one listened. She was exiled, disgraced, and reduced to surviving in Duskwall by doing card tricks and small magic for coin.
+
+Her central wound is vindication mixed with resentment. She was right, but being right cost her everything. When Ashen attack Duskwall, her magic returns violently, proving that the power inside her was never truly gone.
+
+Personality:
+- Angry, intelligent, sharp-tongued
+- Haunted by exile and humiliation
+- Craves proof more than comfort
+- Afraid of how much she enjoys power
+
+Core conflict:
+Eryn wants the truth, but her desire to prove everyone wrong could turn her reckless.
+
+Special mechanic:
+Raw Power: massive uncontrolled magic, limited to three charges. Using it too much affects her ending.
+
+Story direction (Act 1-2):
+Eryn discovers a High Council journal saying the Greying was not an accident. She is pulled toward the mystery of The Architect, mage tower relics, and the corruption inside the Arcane Circle.
+
+Act 3 (Truth Burns):
+Eryn reaches the ancient Sanctum beneath Valdenmere Cathedral, finding her exiled spellbooks preserved by Dael, The Architect. She confronts him as he prepares to activate "Stage Two" using the Pyre Conduit to "cleanse" Aethermoor. Eryn must decide whether to unleash her dangerous Raw Power or fight carefully to stop him.
+
+Possible endings:
+- Reform: Eryn exposes the truth and helps reshape magical society.
+- Blind: Eryn lets raw power and obsession consume her.
+
+CADEN ASHFORD
+Name: Caden Ashford
+Class: Knight
+Title: The Oathbreaker
+Role: Defensive fighter with high HP, armor, and rage
+
+Caden is a former knight of the Iron Vow. He deserted three years ago after something terrible happened, likely involving a burned village and forty-three dead civilians. He carries guilt like a sentence and keeps moving so no one can catch him.
+
+His central wound is shame. He believes he failed his oath, but the story suggests the order itself may be corrupt.
+
+Personality:
+- Quiet, guarded, practical
+- Protective by instinct
+- Dislikes praise and avoids attachment
+- Carries guilt under discipline
+
+Core conflict:
+Caden wants to disappear, but every crisis forces him to become a knight again.
+
+Special mechanic:
+Rage Mode: boosts attack for several turns, showing the part of him that stops thinking and just fights.
+
+Story direction (Act 1-2):
+Caden saves Millhaven from Ashen Hand cultists and discovers evidence that Lord Marshal Veyran and the Iron Vow are secretly supporting them. His path leads toward Valdenmere and a public reckoning with the order that branded him a deserter.
+
+Act 3 (Redemption or Revenge):
+Imprisoned in the holding cells of the Iron Hall and awaiting execution, Caden is freed by disillusioned young knights. He leads a mutiny to confront Lord Marshal Veyran in his private chambers. Defeating Veyran forces Caden to choose between taking personal vengeance or bringing the corrupt Marshal to a public trial.
+
+Possible endings:
+- Arbiter: Caden exposes the corruption and becomes a force for justice.
+- Outcast: Caden kills Veyran personally and remains condemned.
+
+SOLIA REN
+Name: Solia Ren
+Class: Priest
+Title: The Faithless Healer
+Role: Balanced healer with faith-based abilities
+
+Solia was once connected to the Sacred Flame, but her title and license were revoked. Now she works in a refugee camp outside Valdenmere, healing people without permission because she cannot stop caring.
+
+Her central wound is spiritual doubt. She no longer knows if anyone is listening when she prays, but she prays anyway.
+
+Personality:
+- Gentle but stubborn
+- Compassionate, exhausted, quietly brave
+- Doubts herself but keeps helping
+- Morally stronger than she thinks
+
+Core conflict:
+Solia's faith is wounded, but her compassion survives even when belief does not.
+
+Special mechanic:
+Divine Prayer: heals and buffs defense, but uses limited faith points. Her faith can also be shaken by story events.
+
+Story direction (Act 1-2):
+Solia discovers corrupted Sacred Flame relics and learns that Aldran, her mentor and High Priest, is connected to a plan involving the Pyre Conduit, a weapon meant to "cleanse" anyone touched by the Greying.
+
+Act 3 (The Last Prayer):
+With the Sacred Flame chapter house on lockdown, Solia infiltrates the Vault of the First Flame with the help of her ally Aldric. She confronts High Priest Aldran as he attempts to activate the Pyre Conduit to "heal" the world through destruction. After fighting him to stop the sequence, she must decide whether to strike the keystone to destroy the Conduit and the Vault entirely, or use a fail-safe to redirect and purify the flow, surviving to rebuild a more humane faith.
+
+Possible endings:
+- Reborn: Solia rebuilds faith into something truer and more humane.
+- Ashes: Solia destroys the conduit, but at devastating spiritual or worldly cost.
+
+SHARED THEMES
+- Truth versus institutional lies
+- Power versus restraint
+- Faith after betrayal
+- Guilt and redemption
+- The danger of "cleansing" a wounded world
+- Whether broken people can still save others
+
+MAIN FACTIONS
+The Arcane Circle: magical scholars and authorities tied to Eryn's exile and the Greying cover-up.
+
+The Iron Vow: knightly order tied to Caden's past, now possibly corrupted under Veyran.
+
+The Sacred Flame: religious order tied to Solia's lost title and Aldran's extremist plans.
+
+The Ashen Hand: cultists who worship or exploit the Greying.
+
+The Architect: mysterious figure connected to the truth behind the Greying.
+
+CHARACTER DYNAMIC POTENTIAL
+Eryn and Solia contrast beautifully: Eryn trusts knowledge but fears power; Solia doubts faith but keeps serving.
+
+Caden and Eryn clash over restraint: he fears what happens when people stop controlling themselves; she fears what happens when truth is buried.
+
+Caden and Solia share guilt: both are exiles from once-sacred institutions, and both still act according to the ideals those institutions betrayed.

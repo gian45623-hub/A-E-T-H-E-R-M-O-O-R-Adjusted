@@ -1,0 +1,245 @@
+package ui;
+
+import engine.Party;
+import characters.*;
+import characters.Character;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.io.File;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+
+import util.AssetLoader;
+import util.InputHandler;
+
+public class CharacterSelectPanel extends JPanel {
+
+    private final Color bgColor = new Color(15, 18, 22);
+    private final Color accentColor = new Color(180, 150, 100);
+    private final Color fgColor = new Color(220, 215, 200);
+
+    public static Party selectedParty = new Party();
+    private JLabel partyStatusLabel;
+    private JButton startAdventureBtn;
+
+    public CharacterSelectPanel() {
+        initialize();
+    }
+
+    private void initialize() {
+        setLayout(null);
+        setBackground(bgColor);
+        setSize(1366, 768);
+
+        JLabel header = new JLabel("BUILD YOUR PARTY", SwingConstants.CENTER);
+        header.setFont(new Font("Serif", Font.BOLD, 48));
+        header.setForeground(accentColor);
+        header.setBounds(0, 30, 1366, 50);
+        add(header);
+
+        partyStatusLabel = new JLabel("Selected: 0/5", SwingConstants.CENTER);
+        partyStatusLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
+        partyStatusLabel.setForeground(fgColor);
+        partyStatusLabel.setBounds(0, 80, 1366, 30);
+        add(partyStatusLabel);
+
+        // Character Grid (Absolute Layout inside ScrollPane)
+        JPanel gridPanel = new JPanel();
+        gridPanel.setLayout(null);
+        gridPanel.setOpaque(false);
+        gridPanel.setPreferredSize(new Dimension(1366, 900));
+
+        JPanel erynCard = createCharacterCard("ERYN VOSS", "The Exiled Scholar",
+                "\"I was right. I was always right. Now I'll prove it.\"",
+                "High damage. Low defense. Raw power mechanic.", new Eryn(), "char_mage");
+        erynCard.setBounds(303, 20, 250, 420);
+        gridPanel.add(erynCard);
+
+        JPanel brennanCard = createCharacterCard("BRENNAN ASHVANE", "The Oathbreaker",
+                "\"I did something I can never undo. That doesn't mean I stop.\"",
+                "High HP. Strong defense. Rage mechanic.", new Brennan(), "char_knight");
+        brennanCard.setBounds(573, 20, 250, 420);
+        gridPanel.add(brennanCard);
+
+        JPanel soliaCard = createCharacterCard("SOLIA REN", "The Faithless Healer",
+                "\"I don't know if anyone is listening. I'll pray anyway.\"",
+                "Balanced. Healer. Faith mechanic.", new Solia(), "char_priest");
+        soliaCard.setBounds(843, 20, 250, 420);
+        gridPanel.add(soliaCard);
+
+        JPanel miraCard = createCharacterCard("MIRA CAEL", "The Ghost",
+                "\"One minute for Lena. Then I go to work.\"",
+                "High speed. Stealth. Shadow strike.", new Mira(), "char_mira");
+        miraCard.setBounds(438, 460, 250, 420);
+        gridPanel.add(miraCard);
+
+        JPanel seraCard = createCharacterCard("SERA CALDWELL", "The Eastern Scout",
+                "\"I mentioned the wire. Watch the ground specifically.\"",
+                "Ranged specialist. Focused shot.", new Sera(), "char_sera");
+        seraCard.setBounds(708, 460, 250, 420);
+        gridPanel.add(seraCard);
+
+        JScrollPane scrollPane = new JScrollPane(gridPanel);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(0, 130, 1366, 450);
+        add(scrollPane);
+
+        startAdventureBtn = new JButton("START ADVENTURE");
+        startAdventureBtn.setFont(new Font("SansSerif", Font.BOLD, 24));
+        startAdventureBtn.setForeground(Color.BLACK);
+        startAdventureBtn.setBackground(accentColor);
+        startAdventureBtn.setFocusPainted(false);
+        startAdventureBtn.setBounds(533, 600, 300, 50);
+        startAdventureBtn.setEnabled(false);
+        startAdventureBtn.addActionListener(e -> {
+            InputHandler.submitInput("START");
+        });
+        add(startAdventureBtn);
+    }
+
+    private JPanel createCharacterCard(String name, String sub, String quote, String desc, Character charObj,
+            String baseImgName) {
+        JPanel card = new JPanel();
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        card.setBackground(new Color(25, 28, 35));
+        card.setBorder(BorderFactory.createLineBorder(new Color(45, 48, 55), 2));
+        card.setPreferredSize(new Dimension(280, 420));
+
+        JPanel portraitContainer = new JPanel(new BorderLayout());
+        portraitContainer.setOpaque(false);
+        portraitContainer.setPreferredSize(new Dimension(280, 200));
+        portraitContainer.setMaximumSize(new Dimension(280, 200));
+
+        if (java.beans.Beans.isDesignTime()) {
+            Image rawImg = new ImageIcon("src/assets/images/" + baseImgName + ".png").getImage();
+            int targetH = 190;
+            int iw = rawImg.getWidth(null);
+            int ih = rawImg.getHeight(null);
+            int targetW = 200;
+            if (iw > 0 && ih > 0) {
+                double aspect = (double) iw / ih;
+                targetW = (int) (targetH * aspect);
+                if (targetW > 270) {
+                    targetW = 270;
+                    targetH = (int) (targetW / aspect);
+                }
+            }
+            Image scaled = rawImg.getScaledInstance(targetW, targetH, Image.SCALE_SMOOTH);
+            JLabel portrait = new JLabel(new ImageIcon(scaled), SwingConstants.CENTER);
+            portraitContainer.add(portrait, BorderLayout.CENTER);
+        } else {
+            Image finalImg = null;
+            for (String ext : new String[] { ".png", ".gif" }) {
+                File f = AssetLoader.resolveImageFile(baseImgName + ext);
+                if (f != null) {
+                    finalImg = new ImageIcon(f.getAbsolutePath()).getImage();
+                    break;
+                }
+            }
+
+            if (finalImg != null) {
+                int targetH = 190;
+                int iw = finalImg.getWidth(null);
+                int ih = finalImg.getHeight(null);
+                int targetW = 200;
+                if (iw > 0 && ih > 0) {
+                    double aspect = (double) iw / ih;
+                    targetW = (int) (targetH * aspect);
+                    if (targetW > 270) {
+                        targetW = 270;
+                        targetH = (int) (targetW / aspect);
+                    }
+                }
+                Image scaled = finalImg.getScaledInstance(targetW, targetH, Image.SCALE_SMOOTH);
+                JLabel portrait = new JLabel(new ImageIcon(scaled), SwingConstants.CENTER);
+                portraitContainer.add(portrait, BorderLayout.CENTER);
+            } else {
+                JLabel missing = new JLabel("[Portrait Missing]", SwingConstants.CENTER);
+                missing.setForeground(Color.GRAY);
+                portraitContainer.add(missing, BorderLayout.CENTER);
+            }
+        }
+
+        card.add(Box.createRigidArea(new Dimension(0, 10)));
+        card.add(portraitContainer);
+        card.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        JLabel nameLbl = new JLabel(name.trim(), SwingConstants.CENTER);
+        nameLbl.setFont(new Font("Serif", Font.BOLD, 22));
+        nameLbl.setForeground(accentColor);
+        nameLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(nameLbl);
+
+        JLabel subLbl = new JLabel(sub, SwingConstants.CENTER);
+        subLbl.setFont(new Font("SansSerif", Font.ITALIC, 16));
+        subLbl.setForeground(fgColor.darker());
+        subLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(subLbl);
+
+        card.add(Box.createRigidArea(new Dimension(0, 5)));
+
+        String htmlQuote = quote.trim().replace("\n\n", "\n").replace("\n", "<br/>");
+        JLabel quoteLbl = new JLabel(
+                "<html><div style='text-align: center; width: 190px;'><i>" + htmlQuote + "</i></div></html>",
+                SwingConstants.CENTER);
+        quoteLbl.setFont(new Font("Serif", Font.PLAIN, 14));
+        quoteLbl.setForeground(fgColor);
+        quoteLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(quoteLbl);
+
+        String htmlDesc = desc.trim().replace("\n\n", "\n").replace("\n", "<br/>");
+        JLabel descLbl = new JLabel(
+                "<html><div style='text-align: center; width: 190px;'>" + htmlDesc + "</div></html>",
+                SwingConstants.CENTER);
+        descLbl.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        descLbl.setForeground(accentColor.darker());
+        descLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(Box.createRigidArea(new Dimension(0, 5)));
+        card.add(descLbl);
+
+        card.add(Box.createVerticalGlue());
+
+        JButton selectBtn = new JButton("ADD TO PARTY");
+        selectBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
+        selectBtn.setForeground(Color.BLACK);
+        selectBtn.setBackground(accentColor);
+        selectBtn.setFocusPainted(false);
+        selectBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        selectBtn.setMaximumSize(new Dimension(150, 35));
+        selectBtn.addActionListener(e -> {
+            if (selectBtn.getText().equals("ADD TO PARTY") && selectedParty.getPartySize() < 5) {
+                selectedParty.addMember(charObj);
+                selectBtn.setText("SELECTED");
+                selectBtn.setBackground(new Color(100, 180, 100)); // Green for selected
+            } else if (selectBtn.getText().equals("SELECTED")) {
+                selectedParty.removeMember(charObj);
+                selectBtn.setText("ADD TO PARTY");
+                selectBtn.setBackground(accentColor);
+            }
+            partyStatusLabel.setText("Selected: " + selectedParty.getPartySize() + "/5");
+            startAdventureBtn.setEnabled(selectedParty.getPartySize() > 0);
+        });
+
+        card.add(selectBtn);
+        card.add(Box.createRigidArea(new Dimension(0, 15)));
+
+        return card;
+    }
+}
