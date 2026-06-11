@@ -19,8 +19,11 @@ public class Main {
                 app.setVisible(true);
             });
 
-            showMainMenu();
-            Character player = chooseCharacter();
+            Character player = null;
+            while (player == null) {
+                showMainMenu();
+                player = chooseCharacter();
+            }
 
             // para lumipat ng panel
             javax.swing.SwingUtilities.invokeLater(() -> {
@@ -46,14 +49,14 @@ public class Main {
             switch (choice) {
                 case 1 -> startGame = true;
                 case 3 -> {
-                    // Switch to Credits panel in UI 
+                    // Switch to Credits panel in UI
                     javax.swing.SwingUtilities.invokeLater(() -> {
                         ui.MainFrame.getInstance().showPanel("CREDITS");
                     });
-                    
+
                     // Wait for the user to press "Back"
                     InputHandler.waitForEnter();
-                    
+
                     // Switch back to Menu panel
                     javax.swing.SwingUtilities.invokeLater(() -> {
                         ui.MainFrame.getInstance().showPanel("MENU");
@@ -72,11 +75,15 @@ public class Main {
 
         // dito iniintay ang input ng user pra makapili na ng character HAHA
         String choice = "";
-        while (!choice.equals("START")) {
+        while (!choice.equals("START") && !choice.equals("RETURN")) {
             choice = InputHandler.getString();
         }
-        
-        // dito nilalagay sa system properties kung sino yung first character sa party 
+
+        if (choice.equals("RETURN")) {
+            return null;
+        }
+
+        // dito nilalagay sa system properties kung sino yung first character sa party
         // para malaman ng game engine kung sino yung selected character
         if (ui.CharacterSelectPanel.selectedCharacter != null) {
             Character first = ui.CharacterSelectPanel.selectedCharacter;
@@ -94,6 +101,12 @@ public class Main {
                 System.setProperty("aethermoor.selectedCharacter", "Knight");
             }
         }
+        // dito ko nilagay para bumalik ng character select pag na click yung start
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            ui.MainFrame.getInstance().showPanel("SELECT");
+        });
+        // di to na papansin pag may bagong update sa code HAHAHAHHAHAHAHAHAH
+        // pero sana ma notice to
         return ui.CharacterSelectPanel.selectedCharacter;
     }
 }

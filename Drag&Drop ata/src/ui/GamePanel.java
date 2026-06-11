@@ -303,6 +303,10 @@ public class GamePanel extends JPanel {
             nt = "Valdenmere";
         }
 
+        // para mas maganda yung pag load ng scene
+        // ang ginagawa nito ay kung mag kaiba ba yung scene na niload o hindi
+        // nilalagay na din yung title ng scene na sinasabi sa ibabaw ng game screen
+        // para malaman kung ano yung scene na niloload
         boolean sceneChanged = (currentScene != ns);
         currentScene = ns;
         currentSceneTitle = nt;
@@ -505,6 +509,11 @@ public class GamePanel extends JPanel {
             t.add(new MidiEvent(off, tick + 24));
             tick += 24;
         }
+        // ang function neto code nato ay gumagawa ng background music parang sa game
+        // tapos
+        // ginagawa nya to para di nakaka boring habang naglalaro tas pag end na yung
+        // music mag sisimula ulit tapos pag patay na yung music di sya gagana at yung
+        // music toggle button ay magiging off
         return seq;
     }
 
@@ -512,19 +521,25 @@ public class GamePanel extends JPanel {
     // din tanggalin to HAHAHAHA
     private class CustomScrollBarUI extends BasicScrollBarUI {
         @Override
-        protected void configureScrollBarColors() {
-            thumbColor = accentColor;
-            trackColor = trayColor;
+        protected JButton createDecreaseButton(int orientation) {
+            return createScrollButton();
+            // ang function neto code nato ay gumagawa ng scroll bar ui na para sa game
+
         }
 
         @Override
-        protected JButton createDecreaseButton(int orientation) {
-            return createScrollButton();
+        protected void configureScrollBarColors() {
+            thumbColor = accentColor;
+            trackColor = trayColor;
+            // design ng scroll bar
+
         }
 
         @Override
         protected JButton createIncreaseButton(int orientation) {
             return createScrollButton();
+            // ang function neto code nato ay gumagawa ng scroll bar ui na para sa game
+
         }
 
         private JButton createScrollButton() {
@@ -534,10 +549,13 @@ public class GamePanel extends JPanel {
             button.setContentAreaFilled(false);
             button.setBorder(BorderFactory.createEmptyBorder());
             return button;
+            // eto naman yung ginagawa yung button ng scroll bar para di masama sa display
+            // HAHAHAHA
         }
     }
 
     private BasicScrollBarUI createScrollBarUI() {
         return new CustomScrollBarUI();
+        // then eto naman yung pinapasa yung custom scroll bar ui para sa game
     }
 }

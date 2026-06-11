@@ -7,7 +7,7 @@ import util.InputHandler;
 import util.Printer;
 
 public class GameEngine {
-
+    // dto nagaganap lahat ng story, desisyon, at endings ng laro
     private Character player;
     private StoryManager storyManager;
 
@@ -18,7 +18,7 @@ public class GameEngine {
 
     public void start() {
         showIntro();
-        runStory();
+        runStory(); // start ng game/story
     }
 
     private void showIntro() {
@@ -28,12 +28,17 @@ public class GameEngine {
         Printer.slowPrint("Your journey begins. One wound. One conspiracy.");
         Printer.slowPrint("═══════════════════════════════════════════════════");
         Printer.printDivider();
-        InputHandler.waitForEnter();
+        InputHandler.waitForEnter(); // Yung hint about sa buong story nung laro,
+        // kung saan umiikot yung buong story
     }
 
     private void runStory() {
-        if (player == null) return;
-        Character leader = player;
+        if (player == null)
+            return;
+        Character leader = player; // dto nakalagay yung story nung bawat character
+        // kung sino man ang pinili nung user sa ui, yun yung magsisimula ng story
+        // dto rin nagaganap yung mga desisyon ng user sa laro
+        // dto rin nagaganap yung mga ending ng laro
 
         if (leader instanceof Eryn || leader instanceof Mage) {
             runMageStory((Mage) leader);
@@ -54,35 +59,35 @@ public class GameEngine {
         new ErynAct1(mage, storyManager).play();
         new ErynAct2(mage, storyManager).play();
         new ErynAct3(mage, storyManager).play();
-        showMageEnding(mage);
+        showMageEnding(mage); // eryn voss story
     }
 
     private void runKnightStory(Knight knight) {
         new BrennanAct1(knight, storyManager).play();
         new BrennanAct2(knight, storyManager).play();
         new BrennanAct3(knight, storyManager).play();
-        showKnightEnding(knight);
+        showKnightEnding(knight); // brennan ashvane story
     }
 
     private void runPriestStory(Priest priest) {
         new SoliaAct1(priest, storyManager).play();
         new SoliaAct2(priest, storyManager).play();
         new SoliaAct3(priest, storyManager).play();
-        showPriestEnding(priest);
+        showPriestEnding(priest); // solia ren story
     }
 
     private void runMiraStory(Mira mira) {
         new MiraAct1(mira, storyManager).play();
         new MiraAct2(mira, storyManager).play();
         new MiraAct3(mira, storyManager).play();
-        showMiraEnding(mira);
+        showMiraEnding(mira); // mira caen story
     }
 
     private void runSeraStory(Sera sera) {
         new SeraAct1(sera, storyManager).play();
         new SeraAct2(sera, storyManager).play();
         new SeraAct3(sera, storyManager).play();
-        showSeraEnding(sera);
+        showSeraEnding(sera); // sera vesryn story
     }
 
     private void showMageEnding(Mage mage) {
@@ -99,7 +104,7 @@ public class GameEngine {
             Printer.slowPrint("She declines High Arcanist. She becomes Keeper of Accountability.");
             Printer.pause(500);
             Printer.printBox("ENDING: THE REFORMER");
-        }
+        } // possible good/bad endings, depende sa desisyon ng user sa buong game
     }
 
     private void showKnightEnding(Knight knight) {
@@ -115,7 +120,7 @@ public class GameEngine {
             Printer.slowPrint("Brennan refuses his rank back. He becomes the Vow's watchdog — their conscience.");
             Printer.pause(500);
             Printer.printBox("ENDING: THE ARBITER");
-        }
+        } // possible good/bad endings, depende sa desisyon ng user sa buong game
     }
 
     private void showPriestEnding(Priest priest) {
@@ -131,7 +136,7 @@ public class GameEngine {
             Printer.slowPrint("First line of new doctrine: 'Faith is not certainty. Faith is showing up anyway.'");
             Printer.pause(500);
             Printer.printBox("ENDING: THE NEW FLAME");
-        }
+        } // possible good/bad endings, depende sa desisyon ng user sa buong game
     }
 
     private void showMiraEnding(Mira mira) {
@@ -146,7 +151,7 @@ public class GameEngine {
         } else {
             Printer.slowPrint("The cover-up breaks in open court. Lena breathes. The lower city learns why.");
             Printer.printBox("ENDING: TRUTH IN THE OPEN");
-        }
+        } // possible good/bad endings, depende sa desisyon ng user sa buong game
     }
 
     private void showSeraEnding(Sera sera) {
@@ -161,6 +166,6 @@ public class GameEngine {
         } else {
             Printer.slowPrint("Her testimony stops the summit. The engineered war stutters. Integrity survives.");
             Printer.printBox("ENDING: THE WITNESS");
-        }
+        } // possible good/bad endings, depende sa desisyon ng user sa buong game
     }
 }

@@ -18,8 +18,8 @@ public class MainFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                MainFrame window = new MainFrame();
-                window.frame.setVisible(true);
+                MainFrame window = new MainFrame(); // dto yung pag initialize ng main frame
+                window.frame.setVisible(true); // eto naman yung pag set ng visibility ng main frame
             } catch (Exception e) {
                 e.printStackTrace();
             }
