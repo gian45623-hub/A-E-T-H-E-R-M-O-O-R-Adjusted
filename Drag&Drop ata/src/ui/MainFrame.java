@@ -26,6 +26,7 @@ public class MainFrame {
         });
     }
 
+    // eto naman yung pag get ng instance para sa card layout
     public static MainFrame getInstance() {
         if (instance == null) {
             instance = new MainFrame();
@@ -33,6 +34,7 @@ public class MainFrame {
         return instance;
     }
 
+    // eto naman yung pag initialize para sa card layout at pag lipat ng panel
     public MainFrame() {
         initialize();
         instance = this;

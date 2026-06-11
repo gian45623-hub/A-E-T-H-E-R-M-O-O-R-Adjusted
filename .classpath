@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Drag&amp;Drop ata/src"/>
+	<classpathentry kind="output" path="Drag&amp;Drop ata/bin"/>
+</classpath>

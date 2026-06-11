@@ -29,13 +29,13 @@ public class CreditsPanel extends JPanel {
         lblTitle.setBounds(0, 150, 1366, 100);
         add(lblTitle);
 
-        JLabel lblRole = new JLabel("", SwingConstants.CENTER);
+        JLabel lblRole = new JLabel("[TYPE ROLE HERE]", SwingConstants.CENTER);
         lblRole.setFont(new Font("SansSerif", Font.BOLD, 18));
         lblRole.setForeground(accentColor.darker());
         lblRole.setBounds(0, 350, 1366, 30);
         add(lblRole);
 
-        JLabel lblName = new JLabel("", SwingConstants.CENTER);
+        JLabel lblName = new JLabel("[TYPE NAME HERE]", SwingConstants.CENTER);
         lblName.setFont(new Font("Serif", Font.BOLD, 36));
         lblName.setForeground(fgColor);
         lblName.setBounds(0, 400, 1366, 40);
