@@ -4,15 +4,22 @@ package util;
 public class Printer {
 
     private static final int DEFAULT_DELAY = 25;
+    private static volatile boolean skipDialogue = false;
+
+    public static void setSkipDialogue(boolean skip) {
+        skipDialogue = skip;
+    }
 
     public static void slowPrint(String text) {
         for (char c : text.toCharArray()) {
             System.out.print(c);
-            try {
-                int delay = (c == '.' || c == '!' || c == '?') ? 190 : DEFAULT_DELAY;
-                Thread.sleep(delay);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+            if (!skipDialogue) {
+                try {
+                    int delay = (c == '.' || c == '!' || c == '?') ? 190 : DEFAULT_DELAY;
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }
         System.out.println();

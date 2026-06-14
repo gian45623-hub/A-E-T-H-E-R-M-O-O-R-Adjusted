@@ -10,6 +10,8 @@ public class Enemy {
     private String specialMove;
     private int specialMoveCooldown;
     private int turnsSinceSpecial;
+    private int tempAttackBoost;
+    private int attackBoostDuration;
 
     public Enemy(String name, String description, int hp, int attack, int defense, String specialMove, int cooldown) {
         this.name = name;
@@ -31,20 +33,33 @@ public class Enemy {
 
     public int attackPlayer() {
         turnsSinceSpecial++;
+        int currentAttack = getAttack();
         if (turnsSinceSpecial >= specialMoveCooldown) {
             turnsSinceSpecial = 0;
             System.out.println("  ⚠️  " + name + " uses " + specialMove + "!");
-            return attack + 15; // special hits harder
+            return currentAttack + 15; // special hits harder
         }
-        return attack + (int)(Math.random() * 8);
+        return currentAttack + (int)(Math.random() * 8);
     }
 
     public boolean isAlive() { return hp > 0; }
     public String getName() { return name; }
     public String getDescription() { return description; }
-    public int getAttack() { return attack; }
+    public int getAttack() { return Math.max(0, attack + tempAttackBoost); }
     public int getHp() { return hp; }
     public int getMaxHp() { return maxHp; }
+
+    public void applyAttackDebuff(int amount, int duration) {
+        this.tempAttackBoost = amount;
+        this.attackBoostDuration = duration;
+    }
+
+    public void tickDebuffs() {
+        if (attackBoostDuration > 0) {
+            attackBoostDuration--;
+            if (attackBoostDuration == 0) tempAttackBoost = 0;
+        }
+    }
 
     // ─── Pre-built enemies for each character's story ───────────────────────
 

@@ -39,7 +39,7 @@ public class SeraAct1 {
 
     private void scenePatrol() {
         Printer.printDivider();
-        Printer.slowPrint("You guide a survey party of five scholars toward ruins in the eastern scar.");
+        Printer.slowPrint("You guide a survey party of five scholars toward the ruins in the eastern scar.");
         Printer.slowPrint("They are loud. Too loud for this far east. They treat the Greying like a museum exhibit.");
         Printer.slowPrint("Pell, a junior researcher, is constantly tripping over roots.");
         Printer.pause(400);
@@ -51,24 +51,36 @@ public class SeraAct1 {
         Printer.slowPrint("An old trap design. But the wire itself... it catches the sunlight. Unrusted.");
         Printer.slowPrint("Someone set this up recently. And they are watching right now.");
         story.setFlag("sera_noticed_fresh_trap", true);
-        
-        System.out.println("  1. \"Stay completely quiet. We're being hunted.\"");
-        System.out.println("  2. \"Move back, slowly. Keep your eyes on the trees.\"");
+
+        System.out.println("  1. \"Everyone, stay completely quiet. We're being hunted.\"");
+        System.out.println("  2. \"Everyone, move back, slowly. Keep your eyes on the trees.\"");
         System.out.println("  3. Say nothing. Keep your bow trained on the treeline.");
         int choice = InputHandler.getInt(1, 3);
-        
+
         Printer.slowPrint("The silence stretches. Then, a rustle of leaves.");
         if (choice == 1) {
-            Printer.slowPrint("Your warning saves Pell's life. A crossbow bolt thunks into the tree where his head just was.");
+            Printer.slowPrint(
+                    "Your warning saves Pell's life. A crossbow bolt thunks into the tree where his head just was.");
+            Printer.slowPrint(
+                    "Pell jumps, eyes wide, clutching his throat. 'By the Saints... I felt that whizz past my ear!'");
             story.setFlag("sera_saved_pell", true);
         } else if (choice == 2) {
             Printer.slowPrint("The scholars scramble back. A bolt strikes the mud at their feet.");
+            Printer.slowPrint("Pell trips on a root. You hear a sickening crunch as he falls.");
+            Printer.slowPrint("He screams in pain as his leg buckles beneath him.");
+            sera.heal(-10);
         } else {
             Printer.slowPrint("A bolt grazes Pell's shoulder. He screams.");
+            Printer.slowPrint("Blood wells around the shallow wound, soaking his tunic.");
+            sera.heal(-5);
         }
 
         Printer.slowPrint("A scout drops from the branches, drawing a shortsword.");
-        if (!CombatSystem.startCombat(sera, Enemy.ashenHandBandit())) { handleGameOver(); return; }
+        Printer.slowPrint("'Traitor!' the scout snarls, spittle flying. 'Vrakkas claims this land. You die with it.'");
+        if (!CombatSystem.startCombat(sera, Enemy.ashenHandBandit())) {
+            handleGameOver();
+            return;
+        }
         sera.heal(15);
         Printer.slowPrint("You retrieve your arrow from the scout's chest. They know you're here.");
         InputHandler.waitForEnter();
@@ -83,14 +95,14 @@ public class SeraAct1 {
         Printer.slowPrint("You heard the attack before you saw it. You arrived after. The blood on the white stones.");
         Printer.slowPrint("The official report said Vrakkas bandits wanted war. Corvin died for nothing.");
         Printer.pause(400);
-        
+
         Printer.slowPrint("A metallic twang breaks the quiet. Then another. Crossbow bolts hail from the ridge.");
         Printer.slowPrint("Not bandits — these shots are disciplined, timed. A military formation.");
-        
+
         System.out.println("  1. Shield the party — hold the line in the open to draw their fire.");
         System.out.println("  2. Flank the ridge through the heavy brush. Leave the party hidden.");
         System.out.println("  3. Order a fighting retreat to the ruins.");
-        
+
         int c = InputHandler.getInt(1, 3);
         if (c == 2) {
             Printer.slowPrint("You slip into the undergrowth, becoming a ghost. You circle up the ridge.");
@@ -101,13 +113,19 @@ public class SeraAct1 {
         } else {
             Printer.slowPrint("You cover the scholars as they scramble back toward the ancient stone walls.");
         }
-        
+
         Printer.slowPrint("Two heavily armored soldiers break from the ridge, charging your position.");
-        if (!CombatSystem.startCombat(sera, Enemy.ashenSoldier())) { handleGameOver(); return; }
+        if (!CombatSystem.startCombat(sera, Enemy.ashenSoldier())) {
+            handleGameOver();
+            return;
+        }
         sera.heal(20);
-        
+
         Printer.slowPrint("Another soldier charges, swinging a heavy broadsword.");
-        if (!CombatSystem.startCombat(sera, Enemy.ashenSoldier())) { handleGameOver(); return; }
+        if (!CombatSystem.startCombat(sera, Enemy.ashenSoldier())) {
+            handleGameOver();
+            return;
+        }
         sera.heal(20);
         InputHandler.waitForEnter();
     }
@@ -124,10 +142,10 @@ public class SeraAct1 {
         Printer.slowPrint("Beneath the false colors, stitched into their heavy leather gambesons... a silver seal.");
         Printer.slowPrint("A crescent moon over a sword. The Iron Vow.");
         Printer.slowPrint("This wasn't a random attack. It was engineered.");
-        
+
         System.out.println("  1. Take the seal as proof.");
         System.out.println("  2. Say nothing to the scholars. Keep it to yourself.");
-        
+
         if (InputHandler.getInt(1, 2) == 1) {
             Printer.slowPrint("You cut the seal out with your dagger and pocket it.");
             story.setFlag("sera_found_engineered_ambush", true);
@@ -147,7 +165,7 @@ public class SeraAct1 {
         Printer.slowPrint("Corvin's death was not bad luck. It wasn't Vrakkas bandits.");
         Printer.slowPrint("Someone in the Crown needed the eastern road open for war, and Corvin was in the way.");
         Printer.slowPrint("And whoever they are, they are still operating here.");
-        
+
         Printer.printDivider();
         Printer.printBox("ACT I COMPLETE — THE VOSS COMPASS");
         if (story.getFlag("sera_has_seal")) {

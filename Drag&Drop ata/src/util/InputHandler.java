@@ -12,7 +12,9 @@ public class InputHandler {
 
     private static String takeInput() {
         try {
-            return inputQueue.take();
+            String input = inputQueue.take();
+            util.Printer.setSkipDialogue(false);
+            return input;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             return "";

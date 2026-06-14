@@ -109,6 +109,13 @@ public class GamePanel extends JPanel {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setMargin(new Insets(10, 15, 10, 15));
+        
+        textArea.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                util.Printer.setSkipDialogue(true);
+            }
+        });
 
         textScrollPane = new JScrollPane(textArea);
         textScrollPane.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, trayBorder));

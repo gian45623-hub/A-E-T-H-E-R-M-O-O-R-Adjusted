@@ -16,6 +16,10 @@ public abstract class Character {
     protected int maxMana;
     protected int healthPotions;
     protected int manaPotions;
+    protected int tempAttackBoost;
+    protected int attackBoostDuration;
+    protected int tempDefenseBoost;
+    protected int defenseBoostDuration;
     protected List<Skill> skills;
 
     public Character(String name, String title, int hp, int attack, int defense, int mana) {
@@ -37,7 +41,7 @@ public abstract class Character {
     public abstract String getClassDescription();
 
     public void takeDamage(int damage) {
-        int reduced = Math.max(1, damage - defense);
+        int reduced = Math.max(1, damage - getDefense());
         this.hp = Math.max(0, this.hp - reduced);
         System.out.println("  " + name + " takes " + reduced + " damage! HP: " + hp + "/" + maxHp);
     }
@@ -55,7 +59,31 @@ public abstract class Character {
     public boolean isAlive() { return hp > 0; }
 
     public String getStatusBar() {
-        return "❤  HP: " + hp + "/" + maxHp + "   💧 Mana: " + mana + "/" + maxMana;
+        String buffs = "";
+        if (attackBoostDuration > 0) buffs += "[ATK UP] ";
+        if (defenseBoostDuration > 0) buffs += "[DEF UP] ";
+        return "❤  HP: " + hp + "/" + maxHp + "   💧 Mana: " + mana + "/" + maxMana + "   " + buffs;
+    }
+
+    public void tickBuffs() {
+        if (attackBoostDuration > 0) {
+            attackBoostDuration--;
+            if (attackBoostDuration == 0) tempAttackBoost = 0;
+        }
+        if (defenseBoostDuration > 0) {
+            defenseBoostDuration--;
+            if (defenseBoostDuration == 0) tempDefenseBoost = 0;
+        }
+    }
+
+    public void applyAttackBuff(int amount, int duration) {
+        this.tempAttackBoost = amount;
+        this.attackBoostDuration = duration;
+    }
+
+    public void applyDefenseBuff(int amount, int duration) {
+        this.tempDefenseBoost = amount;
+        this.defenseBoostDuration = duration;
     }
 
     // Getters
@@ -63,8 +91,8 @@ public abstract class Character {
     public String getTitle() { return title; }
     public int getHp() { return hp; }
     public int getMaxHp() { return maxHp; }
-    public int getAttackPower() { return attackPower; }
-    public int getDefense() { return defense; }
+    public int getAttackPower() { return attackPower + tempAttackBoost; }
+    public int getDefense() { return defense + tempDefenseBoost; }
     public int getMana() { return mana; }
     public int getMaxMana() { return maxMana; }
     public int getHealthPotions() { return healthPotions; }
@@ -77,4 +105,6 @@ public abstract class Character {
     public void setAttackPower(int attackPower) { this.attackPower = attackPower; }
     public void useHealthPotion() { if (healthPotions > 0) healthPotions--; }
     public void useManaPotion() { if (manaPotions > 0) manaPotions--; }
+    public void addHealthPotion() { healthPotions++; }
+    public void addManaPotion() { manaPotions++; }
 }
