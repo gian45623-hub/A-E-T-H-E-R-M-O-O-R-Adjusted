@@ -11,51 +11,55 @@ import javax.swing.SwingConstants;
 public class CreditsPanel extends JPanel {
     // eto naman yung credits panel na may design at may button para makabalik sa
     // menu
-    private final Color bgColor = new Color(10, 12, 15); // design ng background color ng panel
-    private final Color accentColor = new Color(180, 150, 100); // accent color ng panel
-    private final Color fgColor = new Color(220, 215, 200); // foreground color ng panel
+    private final Color bgColor = new Color(10, 12, 15);
+    private final Color accentColor = new Color(180, 150, 100);
+    private final Color fgColor = new Color(220, 215, 200);
 
-    // eto naman yung pag initialize ng credits panel
     public CreditsPanel() {
         initialize();
     }
 
-    private void initialize() { // eto naman yung pag initialize para sa credits panel
-        setLayout(null); // design ng layout ng panel
-        setBackground(bgColor); // design ng background color ng panel
-        setSize(1366, 768); // size ng credits panel
+    private void initialize() {
+        setLayout(null);
+        setBackground(bgColor);
+        setSize(1366, 768);
 
-        JLabel lblTitle = new JLabel("C R E D I T S", SwingConstants.CENTER); // design ng title ng credits panel
-        lblTitle.setFont(new Font("Serif", Font.BOLD, 64)); // font ng title ng credits panel
-        lblTitle.setForeground(accentColor); // design ng color ng title ng credits panel
-        lblTitle.setBounds(0, 150, 1366, 100); // design ng position ng title ng credits panel
-        add(lblTitle); // eto naman yung pag add ng title ng credits panel
+        JLabel lblTitle = new JLabel("C R E D I T S", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Serif", Font.BOLD, 64));
+        lblTitle.setForeground(accentColor);
+        lblTitle.setBounds(0, 150, 1366, 100);
+        add(lblTitle);
 
-        JLabel lblRole = new JLabel("[TYPE ROLE HERE]", SwingConstants.CENTER); // design ng role ng credits panel
-        lblRole.setFont(new Font("SansSerif", Font.BOLD, 18)); // font ng role ng credits panel
-        lblRole.setForeground(accentColor.darker()); // design ng color ng role ng credits panel
-        lblRole.setBounds(0, 350, 1366, 30); // design ng position ng role ng credits panel
-        add(lblRole); // eto naman yung pag add ng role ng credits panel
+        JLabel lblRole = new JLabel("Developers", SwingConstants.CENTER);
+        lblRole.setFont(new Font("Serif", Font.BOLD, 25));
+        lblRole.setForeground(accentColor.darker());
+        lblRole.setBounds(0, 270, 1366, 30);
+        add(lblRole);
 
-        JLabel lblName = new JLabel("[TYPE NAME HERE]", SwingConstants.CENTER); // design ng name para sa credits panel
-        lblName.setFont(new Font("Serif", Font.BOLD, 36)); // font ng name para sa credits panel
-        lblName.setForeground(fgColor); // design ng color ng name para sa credits panel
-        lblName.setBounds(0, 400, 1366, 40); // design ng position ng name para sa credits panel
-        add(lblName); // eto naman yung pag add ng name para sa credits panel
+        JLabel lblName = new JLabel("Endiafe, John Harry A.", SwingConstants.CENTER);
+        lblName.setFont(new Font("Serif", Font.BOLD, 20));
+        lblName.setForeground(fgColor);
+        lblName.setBounds(0, 300, 1366, 40);
+        add(lblName);
 
-        JLabel lblinfo = new JLabel("THIS GAME IS FOR SCHOOL PROJECT ONLY", SwingConstants.CENTER); // design ng info
-                                                                                                    // text
-        lblinfo.setFont(new Font("Serif", Font.PLAIN, 12)); // font ng info text
-        lblinfo.setForeground(fgColor); // design ng color ng info text
-        lblinfo.setBounds(0, 450, 1366, 40); // design ng position ng info text
-        add(lblinfo); // eto naman yung pag add ng info text
+        JLabel lblName1 = new JLabel("Labso, Gian Errol V.", SwingConstants.CENTER);
+        lblName1.setFont(new Font("Serif", Font.BOLD, 20));
+        lblName1.setForeground(fgColor);
+        lblName1.setBounds(0, 325, 1366, 40);
+        add(lblName1);
 
-        JButton btn = new JButton("BACK TO MENU"); // design ng button para makabalik sa menu
-        btn.setFont(new Font("SansSerif", Font.BOLD, 16)); // font ng button para makabalik sa menu
-        btn.setForeground(Color.BLACK); // design ng color ng button para makabalik sa menu
-        btn.setBackground(accentColor); // design ng background color ng button para makabalik sa menu
-        btn.setFocusPainted(false); // design ng focus ng button para makabalik sa menu
-        btn.setBounds(583, 550, 200, 40); // design ng position ng button para makabalik sa menu
+        JLabel lblinfo = new JLabel("THIS GAME IS FOR SCHOOL PROJECT ONLY", SwingConstants.CENTER);
+        lblinfo.setFont(new Font("Serif", Font.PLAIN, 12));
+        lblinfo.setForeground(fgColor);
+        lblinfo.setBounds(0, 380, 1366, 40);
+        add(lblinfo);
+
+        JButton btn = new JButton("BACK TO MENU");
+        btn.setFont(new Font("SansSerif", Font.BOLD, 16));
+        btn.setForeground(Color.BLACK);
+        btn.setBackground(accentColor);
+        btn.setFocusPainted(false);
+        btn.setBounds(583, 550, 200, 40);
         btn.addActionListener(e -> {
             util.InputHandler.submitInput(""); // para ma signal na exit sa panel
         });
