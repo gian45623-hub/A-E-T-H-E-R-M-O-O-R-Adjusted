@@ -46,6 +46,7 @@ public class SeraAct1 {
         Printer.slowPrint("You heard the attack before you saw it. You arrived after.");
         Printer.slowPrint("Now crossbow bolts from the ridge. Not bandits — disciplined, timed.");
         System.out.println("  1. Shield the party — hold the line  2. Flank the ridge  3. Order a fighting retreat");
+        System.out.println(" ");
         int c = InputHandler.getInt(1, 3);
         if (c == 2) story.setFlag("sera_flanked_ridge", true);
         if (!CombatSystem.startCombat(sera, Enemy.ashenHandBandit())) { handleGameOver(); return; }

@@ -50,9 +50,9 @@ public class SoliaAct1 {
         Printer.pause(400);
         System.out.println();
         System.out.println("  What do you do first?");
-        System.out.println("  1. Go check on the three affected patients immediately.");
-        System.out.println("  2. Ask Pell to describe the priest.");
-        System.out.println("  3. Find the camp leader and report it.");
+        System.out.println("\"  1. Go check on the three affected patients immediately.\"");
+        System.out.println("\"  2. Ask Pell to describe the priest.\"");
+        System.out.println("\"  3. Find the camp leader and report it.\"");
 
         int choice = InputHandler.getInt(1, 3);
 
@@ -96,10 +96,10 @@ public class SoliaAct1 {
         Printer.slowPrint("Someone has fused holy relics with dark energy.");
         Printer.pause(400);
         System.out.println();
-        System.out.println("  This changes everything. What do you do?");
-        System.out.println("  1. Keep the medallion as evidence. Go to the city.");
-        System.out.println("  2. Destroy it. It feels wrong to touch.");
-        System.out.println("  3. Try to purify it yourself, right now.");
+        System.out.println("  This changes everything. What do you do?\"");
+        System.out.println("\"  1. Keep the medallion as evidence. Go to the city.\"");
+        System.out.println("\" 2. Destroy it. It feels wrong to touch.\"");
+        System.out.println("\"  3. Try to purify it yourself, right now.\"");
 
         int choice = InputHandler.getInt(1, 3);
 
@@ -152,9 +152,9 @@ public class SoliaAct1 {
         Printer.pause(300);
         System.out.println();
         System.out.println("  How do you approach?");
-        System.out.println("  1. Pose as a visiting cleric. Bluff your way in.");
-        System.out.println("  2. Enter through the servants' entrance — you know the layout.");
-        System.out.println("  3. Watch and wait. Learn the patrol patterns first.");
+        System.out.println("\"  1. Pose as a visiting cleric. Bluff your way in.\"");
+        System.out.println("\"  2. Enter through the servants' entrance — you know the layout.\"");
+        System.out.println("\"  3. Watch and wait. Learn the patrol patterns first.\"");
 
         int choice = InputHandler.getInt(1, 3);
 
@@ -211,8 +211,8 @@ public class SoliaAct1 {
         Printer.pause(400);
         System.out.println();
         System.out.println("  Your paths are about to collide. What do you do?");
-        System.out.println("  1. Help her — create a distraction so she can escape.");
-        System.out.println("  2. Use the commotion to slip away unnoticed.");
+        System.out.println("\"  1. Help her — create a distraction so she can escape.\"");
+        System.out.println("\"  2. Use the commotion to slip away unnoticed.\"");
 
         int choice = InputHandler.getInt(1, 2);
 
