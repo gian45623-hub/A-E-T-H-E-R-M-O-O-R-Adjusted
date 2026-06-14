@@ -27,15 +27,19 @@ Solia was once connected to the Sacred Flame, but her title and license were rev
 * **Personality:** Gentle but stubborn, compassionate, exhausted, quietly brave.
 * **Gameplay Estimate:** Balanced healer. Uses "Divine Prayer" mechanic to heal and buff defense at the cost of limited faith points. Her faith can also be shaken by story events.
 
-### Mira Cael (Ghost)
-**Title:** The Ghost
-"One minute for Lena. Then I go to work."
-* **Gameplay Estimate:** High speed and stealth. Focuses on shadowy strikes and quick evasion.
+### Mira Cael (Thief / Ghost)
+**Title:** The Lower-City Thief
+A master thief from Caldenmere's lower city, driven entirely by the need to cure her eleven-year-old sister, Lena, of the Blight-Cough. The illness is caused by Greying runoff, which the Crown secretly vents into the slums. Mira's jobs eventually lead her to uncover a massive conspiracy involving the Pyre Conduit, forcing her to choose between saving her sister or saving thousands of lives by exposing the truth.
 
-### Sera Caldwell (Scout)
-**Title:** The Eastern Scout
-"I mentioned the wire. Watch the ground specifically."
-* **Gameplay Estimate:** Ranged specialist. Utilizes focused shots to deal damage from afar.
+* **Personality:** Cynical, fiercely protective of her sister, calculating, and distrustful of authority.
+* **Gameplay Estimate:** High speed and stealth. Focuses on shadowy strikes, critical hits, and quick evasion.
+
+### Sera Caldwell (Ranger / Scout)
+**Title:** The Ranger of the Eastern Scar
+A seasoned independent ranger who used to guide patrols through the Greying's corrupted eastern territories. She carries the guilt of her friend Corvin's death, a peace emissary whose assassination was blamed on Vrakkas bandits. Hired by the Royal Vanguard to secure a deep site in the Scar, she discovers the ambush was an inside job and uncovers a plot to build a doomsday weapon called "Stage Two."
+
+* **Personality:** Pragmatic, observant, haunted by her past, but deeply committed to the truth.
+* **Gameplay Estimate:** Ranged specialist. Utilizes bow skills, traps, and focused shots to deal damage from afar.
 
 ## Main Factions
 * **The Arcane Circle:** Magical scholars and authorities tied to Eryn's exile and the Greying cover-up.
