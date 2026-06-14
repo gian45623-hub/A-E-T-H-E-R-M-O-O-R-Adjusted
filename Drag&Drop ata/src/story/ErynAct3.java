@@ -90,7 +90,10 @@ public class ErynAct3 {
 
         Printer.slowPrint("A guardian construct activates — the Sanctum defending itself!");
         boolean won = CombatSystem.startCombat(eryn, Enemy.corruptedConstruct());
-        if (!won) { handleGameOver(); return; }
+        if (!won) {
+            handleGameOver();
+            return;
+        }
         eryn.restoreMana(25);
         InputHandler.waitForEnter();
     }
@@ -190,7 +193,10 @@ public class ErynAct3 {
         InputHandler.waitForEnter();
 
         boolean won = CombatSystem.startCombat(eryn, Enemy.bossValdros());
-        if (!won) { handleGameOver(); return; }
+        if (!won) {
+            handleGameOver();
+            return;
+        }
     }
 
     private void sceneEnding() {
