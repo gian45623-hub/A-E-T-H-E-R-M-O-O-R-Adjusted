@@ -19,33 +19,32 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import util.InputHandler;
 
-public class CharacterSelectPanel extends JPanel { // dito nilalagay yung design ng character select panel
-    private final Color bgColor = new Color(15, 18, 22); // design ng background color ng character select panel
-    private final Color accentColor = new Color(180, 150, 100); // design ng accent color ng character select panel
-    private final Color fgColor = new Color(220, 215, 200); // design ng foreground color ng character select panel
+public class CharacterSelectPanel extends JPanel {
+    private final Color bgColor = new Color(15, 18, 22);
+    private final Color accentColor = new Color(180, 150, 100);
+    private final Color fgColor = new Color(220, 215, 200);
 
-    public static Character selectedCharacter = null; // dito nilalagay yung selected character
-    private JLabel partyStatusLabel; // design ng party status label
-    private JButton startAdventureBtn; // design ng start adventure button
-    private java.util.List<JButton> selectionButtons = new java.util.ArrayList<>(); // design ng selection buttons
+    public static Character selectedCharacter = null;
+    private JLabel partyStatusLabel;
+    private JButton startAdventureBtn;
+    private java.util.List<JButton> selectionButtons = new java.util.ArrayList<>();
 
     public CharacterSelectPanel() {
-        initialize(); // para ma load yung design ng character select panel
+        initialize();
     }
 
-    private void initialize() { // dito nilalagay yung design ng character select panel
-        setLayout(null); // design ng layout ng character select panel
-        setBackground(bgColor); // design ng background color ng character select panel
-        setSize(1366, 768); // design ng size ng character select panel
+    private void initialize() {
+        setLayout(null);
+        setBackground(bgColor);
+        setSize(1366, 768);
 
-        JLabel header = new JLabel("SELECT YOUR CHARACTER", SwingConstants.CENTER); // design ng header text ng
-                                                                                    // character select panel
-        header.setFont(new Font("Serif", Font.BOLD, 48)); // design ng font ng header text ng character select panel
-        header.setForeground(accentColor); // design ng color ng header text ng character select panel
-        header.setBounds(0, 30, 1366, 50); // design ng position ng header text ng character select panel
-        add(header); // eto naman yung pag add ng header text ng character select panel
+        JLabel header = new JLabel("SELECT YOUR CHARACTER", SwingConstants.CENTER);
+        header.setFont(new Font("Serif", Font.BOLD, 48));
+        header.setForeground(accentColor);
+        header.setBounds(0, 30, 1366, 50);
+        add(header);
 
-        partyStatusLabel = new JLabel("Selected: None", SwingConstants.CENTER); // design ng party status label
+        partyStatusLabel = new JLabel("Selected: None", SwingConstants.CENTER);
         partyStatusLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
         partyStatusLabel.setForeground(fgColor);
         partyStatusLabel.setBounds(0, 80, 1366, 30);
