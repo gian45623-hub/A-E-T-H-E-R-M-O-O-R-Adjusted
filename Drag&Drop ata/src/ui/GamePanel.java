@@ -285,13 +285,22 @@ public class GamePanel extends JPanel {
         storyContext = (storyContext + " " + t).toLowerCase();
         if (storyContext.length() > 4000)
             storyContext = storyContext.substring(storyContext.length() - 4000);
+            
+        if (containsAny(t, "has been defeated", "has fallen")) {
+            storyContext = storyContext.replaceAll("combat:|attacks!|confronts you|guard|battle", "");
+        }
+
         SceneType ns = currentScene;
         String nt = currentSceneTitle;
         if (containsAny(t, "ACT I", "ACT II", "ACT III"))
             nt = t.trim();
+            
         if (containsAny(storyContext, "combat:", "attacks!", "confronts you", "guard", "battle")) {
             ns = SceneType.COMBAT;
             nt = "Combat";
+        } else if (containsAny(storyContext, "sacred flame")) {
+            ns = SceneType.SACRED_FLAME;
+            nt = "Sacred Flame";
         } else if (containsAny(storyContext, "vault", "flame")) {
             ns = SceneType.VAULT;
             nt = "The Vault";
@@ -304,6 +313,27 @@ public class GamePanel extends JPanel {
         } else if (containsAny(storyContext, "valdenmere")) {
             ns = SceneType.VALDENMERE;
             nt = "Valdenmere";
+        } else if (containsAny(storyContext, "spire", "arcane circle")) {
+            ns = SceneType.SPIRE;
+            nt = "The Spire";
+        } else if (containsAny(storyContext, "fortress")) {
+            ns = SceneType.FORTRESS;
+            nt = "Fortress";
+        } else if (containsAny(storyContext, "refugee camp")) {
+            ns = SceneType.REFUGEE_CAMP;
+            nt = "Refugee Camp";
+        } else if (containsAny(storyContext, "waystation")) {
+            ns = SceneType.WAYSTATION;
+            nt = "Waystation";
+        } else if (containsAny(storyContext, "tavern", "ashen tap")) {
+            ns = SceneType.TAVERN;
+            nt = "Tavern";
+        } else if (containsAny(storyContext, "village")) {
+            ns = SceneType.VILLAGE;
+            nt = "Village";
+        } else if (containsAny(storyContext, "road")) {
+            ns = SceneType.ROAD;
+            nt = "The Road";
         }
 
         // para mas maganda yung pag load ng scene
