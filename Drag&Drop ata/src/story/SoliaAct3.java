@@ -168,7 +168,7 @@ public class SoliaAct3 {
         System.out.println();
         System.out.println("  How do you stop Aldran?");
         System.out.println("  1. Fight him. Disable him. Complete your plan.");
-        System.out.println("  2. Appeal to him one final time during the fight.");
+        System.out.println("  2. [Persuasion] Appeal to him one final time during the fight.");
         System.out.println("  3. Take control of the Conduit yourself.");
 
         int choice = InputHandler.getInt(1, 3);
@@ -179,9 +179,16 @@ public class SoliaAct3 {
                 story.setFlag("solia_fought_aldran_directly", true);
             }
             case 2 -> {
-                Printer.slowPrint("You'll fight him, but you'll try to reach him.");
-                Printer.slowPrint("Maybe in the moment of combat, something will break through.");
-                story.setFlag("solia_fought_with_appeals", true);
+                if (util.Dice.performSkillCheck("Persuasion", 16)) {
+                    Printer.slowPrint("You'll fight him, but you'll try to reach him.");
+                    Printer.slowPrint("Maybe in the moment of combat, something will break through.");
+                    Printer.slowPrint("\"Aldran, you taught me that faith is love. This isn't love!\" you cry.");
+                    Printer.slowPrint("He hesitates. His staff wavers. He is suddenly fighting himself as much as you.");
+                    story.setFlag("solia_fought_with_appeals", true);
+                } else {
+                    Printer.slowPrint("You try to reason with him, but he shakes his head.");
+                    Printer.slowPrint("\"My faith is absolute!\" he roars, attacking with renewed fervor.");
+                }
             }
             case 3 -> {
                 Printer.slowPrint("You move for the Conduit's controls. Aldran intercepts you.");

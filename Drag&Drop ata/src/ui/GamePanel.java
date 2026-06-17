@@ -109,7 +109,7 @@ public class GamePanel extends JPanel {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setMargin(new Insets(10, 15, 10, 15));
-        
+
         textArea.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -158,6 +158,8 @@ public class GamePanel extends JPanel {
         musicToggleButton.addActionListener(e -> toggleMusic());
         musicToggleButton.setBounds(1216, 20, 130, 30);
         canvas.add(musicToggleButton);
+
+        preloadImages();
     }
 
     public void cleanup() {
@@ -166,6 +168,22 @@ public class GamePanel extends JPanel {
             musicSequencer.stop();
             musicSequencer.close();
         }
+    }
+
+    private void preloadImages() {
+        new Thread(() -> {
+            for (SceneType scene : SceneType.values()) {
+                String resourcePath = "/assets/images/scene_" + scene.name().toLowerCase() + ".png";
+                if (!cache.containsKey(resourcePath)) {
+                    java.net.URL imgURL = getClass().getResource(resourcePath);
+                    if (imgURL != null) {
+                        cache.put(resourcePath, new javax.swing.ImageIcon(imgURL).getImage());
+                    } else {
+                        cache.put(resourcePath, null);
+                    }
+                }
+            }
+        }).start();
     }
 
     // yung mismong game screen
@@ -276,7 +294,7 @@ public class GamePanel extends JPanel {
     }
 
     // cache para malaman kung nasaan yung image tapos nilalagay sa screen
-    private java.util.Map<String, java.awt.Image> cache = new java.util.HashMap<>();
+    private java.util.Map<String, java.awt.Image> cache = java.util.Collections.synchronizedMap(new java.util.HashMap<>());
 
     // update scene from text dapat yung title ng scene, pag sinabi kasing combat
     // dapat combat yung scene, tapos yung scene context dapat yung pinagsama na
@@ -285,7 +303,7 @@ public class GamePanel extends JPanel {
         storyContext = (storyContext + " " + t).toLowerCase();
         if (storyContext.length() > 4000)
             storyContext = storyContext.substring(storyContext.length() - 4000);
-            
+
         if (containsAny(t, "has been defeated", "has fallen")) {
             storyContext = storyContext.replaceAll("combat:|attacks!|confronts you|guard|battle", "");
         }
@@ -294,7 +312,7 @@ public class GamePanel extends JPanel {
         String nt = currentSceneTitle;
         if (containsAny(t, "ACT I", "ACT II", "ACT III"))
             nt = t.trim();
-            
+
         if (containsAny(storyContext, "combat:", "attacks!", "confronts you", "guard", "battle")) {
             ns = SceneType.COMBAT;
             nt = "Combat";

@@ -173,19 +173,25 @@ public class SoliaAct2 {
         Printer.slowPrint("Their medallions are dark. Corrupted. They've been given Aldran's version of faith.");
         System.out.println();
         System.out.println("  How do you get past them?");
-        System.out.println("  1. Confront them — demand entry as a former senior priestess.");
+        System.out.println("  1. [Intimidation] Confront them — demand entry as a former senior priestess.");
         System.out.println("  2. Use a servant's passage — you mapped these tunnels during your training.");
         System.out.println("  3. Ask Aldric or Vael to create a distraction above.");
 
         int choice = InputHandler.getInt(1, 3);
         switch (choice) {
             case 1 -> {
-                Printer.slowPrint("\"I am Sister Ren of the Third Circle. Stand aside.\"");
-                Printer.slowPrint("Your voice doesn't shake. You're surprised.");
-                Printer.slowPrint("Two of them hesitate. One steps forward. \"The High Priest said—\"");
-                Printer.slowPrint("\"The High Priest answers to the Sacred Flame. As do you. As do I.\"");
-                Printer.slowPrint("A long pause. They part. Training runs deep, even now.");
-                story.setFlag("solia_bluffed_guards", true);
+                if (util.Dice.performSkillCheck("Intimidation", 14)) {
+                    Printer.slowPrint("\"I am Sister Ren of the Third Circle. Stand aside.\"");
+                    Printer.slowPrint("Your voice doesn't shake. You're surprised.");
+                    Printer.slowPrint("Two of them hesitate. One steps forward. \"The High Priest said—\"");
+                    Printer.slowPrint("\"The High Priest answers to the Sacred Flame. As do you. As do I.\"");
+                    Printer.slowPrint("A long pause. They part. Training runs deep, even now.");
+                    story.setFlag("solia_bluffed_guards", true);
+                } else {
+                    Printer.slowPrint("\"I am Sister Ren...\" you start, but they draw their weapons.");
+                    Printer.slowPrint("\"You are an exile,\" the leader says coldly.");
+                    Printer.slowPrint("You are forced to retreat and find the servant's passage instead.");
+                }
             }
             case 2 -> {
                 Printer.slowPrint("There's a passage behind the reliquary storage — used by novices for centuries.");

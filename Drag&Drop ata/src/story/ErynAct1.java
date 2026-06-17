@@ -148,10 +148,15 @@ public class ErynAct1 {
                 Printer.slowPrint("You were never good at leaving things alone.");
             }
             case 3 -> {
-                Printer.slowPrint("You trace the path of destruction. The Ashen came from the east.");
-                Printer.slowPrint("The journal is near the leader — the biggest one.");
-                Printer.slowPrint("As if it was being carried. As if it was important to someone.");
-                story.setFlag("eryn_investigated_scene", true);
+                if (util.Dice.performSkillCheck("Investigation", 10)) {
+                    Printer.slowPrint("You trace the path of destruction. The Ashen came from the east.");
+                    Printer.slowPrint("The journal is near the leader — the biggest one.");
+                    Printer.slowPrint("As if it was being carried. As if it was important to someone.");
+                    story.setFlag("eryn_investigated_scene", true);
+                } else {
+                    Printer.slowPrint("You try to make sense of the tracks, but the market is a mess of ash and debris.");
+                    Printer.slowPrint("You can't tell where they came from.");
+                }
             }
         }
 
@@ -184,8 +189,9 @@ public class ErynAct1 {
         System.out.println("  1. \"What do you want?\" (Cautious)");
         System.out.println("  2. \"How do you know my name?\" (Suspicious)");
         System.out.println("  3. Stand up to leave.");
+        System.out.println("  4. [Insight] Observe him closely.");
 
-        int choice = InputHandler.getInt(1, 3);
+        int choice = InputHandler.getInt(1, 4);
 
         switch (choice) {
             case 1 -> {
@@ -201,6 +207,17 @@ public class ErynAct1 {
                 Printer.slowPrint("You stop. Sit back down.");
                 Printer.slowPrint("He smiles like he expected that.");
                 story.setFlag("eryn_suspicious_of_sevik", true);
+            }
+            case 4 -> {
+                if (util.Dice.performSkillCheck("Insight", 12)) {
+                    Printer.slowPrint("You notice the faint scent of ozone on his coat, and the way he favors his left arm.");
+                    Printer.slowPrint("He's an arcanist. And he's been in a fight recently.");
+                    Printer.slowPrint("You sit back, armed with this knowledge.");
+                    story.setFlag("eryn_insight_sevik", true);
+                    story.setFlag("eryn_suspicious_of_sevik", true);
+                } else {
+                    Printer.slowPrint("He's just a man in a nice coat. He gives you a polite, empty smile.");
+                }
             }
         }
 
@@ -264,14 +281,21 @@ public class ErynAct1 {
         int choice = InputHandler.getInt(1, 2);
 
         if (choice == 1 || story.getFlag("eryn_investigated_scene")) {
-            Printer.slowPrint("Behind the door: a chamber untouched by the collapse.");
-            Printer.slowPrint("Maps. Letters. And one document that makes your blood run cold.");
-            Printer.pause(400);
-            Printer.printBox("A detailed map — Valdenmere. The old Arcane Circle headquarters.");
-            Printer.printBox("Marked in red: \"STAGE TWO BEGINS HERE.\"");
-            Printer.pause(500);
-            Printer.slowPrint("The Architect isn't hiding. They're preparing.");
-            story.setFlag("eryn_found_stage_two_map", true);
+            Printer.slowPrint("The door is sealed with an old cipher lock.");
+            if (util.Dice.performSkillCheck("Arcana", 15)) {
+                Printer.slowPrint("You recognize the lock sequence. You unravel it in seconds.");
+                Printer.slowPrint("Behind the door: a chamber untouched by the collapse.");
+                Printer.slowPrint("Maps. Letters. And one document that makes your blood run cold.");
+                Printer.pause(400);
+                Printer.printBox("A detailed map — Valdenmere. The old Arcane Circle headquarters.");
+                Printer.printBox("Marked in red: \"STAGE TWO BEGINS HERE.\"");
+                Printer.pause(500);
+                Printer.slowPrint("The Architect isn't hiding. They're preparing.");
+                story.setFlag("eryn_found_stage_two_map", true);
+            } else {
+                Printer.slowPrint("The arcane lock is too complex. You hear more constructs approaching.");
+                Printer.slowPrint("You don't have time for this. You grab the relic and run.");
+            }
         } else {
             Printer.slowPrint("You grab the relic. The tower groans around you.");
             Printer.slowPrint("You run. Something scrapes the wall behind you as you go.");

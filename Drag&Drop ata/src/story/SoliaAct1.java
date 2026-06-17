@@ -152,7 +152,7 @@ public class SoliaAct1 {
         Printer.pause(300);
         System.out.println();
         System.out.println("  How do you approach?");
-        System.out.println("\"  1. Pose as a visiting cleric. Bluff your way in.\"");
+        System.out.println("  1. [Deception] Pose as a visiting cleric. Bluff your way in.");
         System.out.println("\"  2. Enter through the servants' entrance — you know the layout.\"");
         System.out.println("\"  3. Watch and wait. Learn the patrol patterns first.\"");
 
@@ -160,9 +160,15 @@ public class SoliaAct1 {
 
         switch (choice) {
             case 1 -> {
-                Printer.slowPrint("You straighten your back. Lift your chin. Become Sister Ren again.");
-                Printer.slowPrint("The novice at the door barely looks at you. \"Sister. The archive is unlocked.\"");
-                Printer.slowPrint("You feel sick pretending. But you're in.");
+                if (util.Dice.performSkillCheck("Deception", 12)) {
+                    Printer.slowPrint("You straighten your back. Lift your chin. Become Sister Ren again.");
+                    Printer.slowPrint("The novice at the door barely looks at you. \"Sister. The archive is unlocked.\"");
+                    Printer.slowPrint("You feel sick pretending. But you're in.");
+                } else {
+                    Printer.slowPrint("You try to act like a visiting cleric, but you stumble over the current greetings.");
+                    Printer.slowPrint("The novice eyes you suspiciously. \"I don't recognize you, Sister. Wait here.\"");
+                    Printer.slowPrint("You have to slip away quickly and find another way in.");
+                }
             }
             case 2 -> {
                 Printer.slowPrint("The kitchen door is exactly where you remember.");

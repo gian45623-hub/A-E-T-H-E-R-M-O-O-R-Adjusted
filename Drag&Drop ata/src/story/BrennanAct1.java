@@ -56,7 +56,7 @@ public class BrennanAct1 {
         System.out.println();
         System.out.println("  What do you do?");
         System.out.println("  1. Step in immediately — draw your sword and charge.");
-        System.out.println("  2. Circle around behind the burning cottages to flank them.");
+        System.out.println("  2. [Stealth] Circle around behind the burning cottages to flank them.");
         System.out.println("  3. Call out from the treeline to distract them, drawing them away from the villagers.");
 
         int choice = InputHandler.getInt(1, 3);
@@ -67,9 +67,14 @@ public class BrennanAct1 {
                 story.setFlag("brennan_acts_on_instinct", true);
             }
             case 2 -> {
-                Printer.slowPrint("Old Iron Vow habits die hard. You sweep wide, using the smoke as cover.");
-                Printer.slowPrint("You emerge behind the leader, your sword at his back.");
-                story.setFlag("brennan_uses_tactics", true);
+                if (util.Dice.performSkillCheck("Stealth", 12)) {
+                    Printer.slowPrint("Old Iron Vow habits die hard. You sweep wide, using the smoke as cover.");
+                    Printer.slowPrint("You emerge behind the leader, your sword at his back.");
+                    story.setFlag("brennan_uses_tactics", true);
+                } else {
+                    Printer.slowPrint("You try to flank them, but a piece of burning wood cracks loudly under your boot.");
+                    Printer.slowPrint("The cultists spin around and spot you immediately.");
+                }
             }
             case 3 -> {
                 Printer.slowPrint("\"HEY!\" Your voice carries over the crackling fire.");

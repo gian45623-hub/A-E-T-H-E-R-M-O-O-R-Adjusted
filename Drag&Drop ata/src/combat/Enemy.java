@@ -39,7 +39,7 @@ public class Enemy {
             System.out.println("  ⚠️  " + name + " uses " + specialMove + "!");
             return currentAttack + 15; // special hits harder
         }
-        return currentAttack + (int)(Math.random() * 8);
+        return currentAttack + util.Dice.roll(0, 7);
     }
 
     public boolean isAlive() { return hp > 0; }

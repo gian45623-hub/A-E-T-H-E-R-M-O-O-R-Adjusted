@@ -100,14 +100,20 @@ public class SeraAct1 {
         Printer.slowPrint("Not bandits — these shots are disciplined, timed. A military formation.");
 
         System.out.println("  1. Shield the party — hold the line in the open to draw their fire.");
-        System.out.println("  2. Flank the ridge through the heavy brush. Leave the party hidden.");
+        System.out.println("  2. [Stealth] Flank the ridge through the heavy brush. Leave the party hidden.");
         System.out.println("  3. Order a fighting retreat to the ruins.");
 
         int c = InputHandler.getInt(1, 3);
         if (c == 2) {
-            Printer.slowPrint("You slip into the undergrowth, becoming a ghost. You circle up the ridge.");
-            Printer.slowPrint("You drop behind their line, your daggers flashing.");
-            story.setFlag("sera_flanked_ridge", true);
+            if (util.Dice.performSkillCheck("Stealth", 14)) {
+                Printer.slowPrint("You slip into the undergrowth, becoming a ghost. You circle up the ridge.");
+                Printer.slowPrint("You drop behind their line, your daggers flashing.");
+                story.setFlag("sera_flanked_ridge", true);
+            } else {
+                Printer.slowPrint("You try to flank them, but the dense brush rustles loudly.");
+                Printer.slowPrint("They spot your movement and turn their crossbows on you.");
+                sera.heal(-15);
+            }
         } else if (c == 1) {
             Printer.slowPrint("You draw aggro, deflecting a bolt with your bracer and returning fire.");
         } else {

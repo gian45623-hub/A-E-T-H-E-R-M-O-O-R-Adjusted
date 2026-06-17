@@ -136,7 +136,7 @@ public class ErynAct3 {
         System.out.println("  How do you stop this?");
         System.out.println("  1. Destroy the device immediately.");
         System.out.println("  2. Fight Valdros one-on-one. Let the victor decide.");
-        System.out.println("  3. Appeal to him. Maybe something can still be saved.");
+        System.out.println("  3. [Persuasion] Appeal to him. Maybe something can still be saved.");
 
         int action = InputHandler.getInt(1, 3);
         switch (action) {
@@ -146,10 +146,18 @@ public class ErynAct3 {
                 story.setFlag("eryn_fought_dael_one_on_one", true);
             }
             case 3 -> {
-                Printer.slowPrint("\"You taught me that knowledge is sacred,\" you say.");
-                Printer.slowPrint("\"You were right. But this isn't the answer.\"");
-                Printer.slowPrint("Something flickers. Then hardens. \"Stop me, if you can.\"");
-                story.setFlag("eryn_appealed_to_dael", true);
+                if (util.Dice.performSkillCheck("Persuasion", 16)) {
+                    Printer.slowPrint("\"You taught me that knowledge is sacred,\" you say.");
+                    Printer.slowPrint("\"You were right. But this isn't the answer.\"");
+                    Printer.slowPrint("For a moment, he lowers his staff. The certainty cracks.");
+                    Printer.slowPrint("\"Perhaps...\" he whispers. Then he shakes his head. \"It is too late.\"");
+                    Printer.slowPrint("He attacks, but his heart isn't in it. His defenses are lowered.");
+                    story.setFlag("eryn_appealed_to_dael", true);
+                } else {
+                    Printer.slowPrint("\"You taught me that knowledge is sacred,\" you say.");
+                    Printer.slowPrint("Valdros's eyes narrow. \"And I taught you that some knowledge must be burned!\"");
+                    Printer.slowPrint("He attacks with absolute fury.");
+                }
             }
         }
         InputHandler.waitForEnter();

@@ -25,9 +25,26 @@ public class Mira extends Character {
             isInShadows = true;
             System.out.println("\n  Mira fades into shadow.");
             System.out.println("  She becomes a ghost in the darkness.");
-            int damage = (int)(Math.random() * 45) + 35; // 35-80 from shadows
-            System.out.println("  A blade flashes from nowhere — (" + damage + " damage!)");
-            enemy.takeDamage(damage);
+            
+            int roll = util.Dice.rollD20();
+            System.out.println("  [D20 Roll: " + roll + "]");
+            
+            if (roll == 1) {
+                System.out.println("  *** CRITICAL FAILURE! ***");
+                System.out.println("  She trips in the shadows and misses completely!");
+            } else {
+                int damage = util.Dice.roll(35, 80);
+                if (roll <= 9) {
+                    System.out.println("  A shallow cut...");
+                    damage = damage / 2;
+                } else if (roll == 20) {
+                    System.out.println("  *** CRITICAL SUCCESS! ***");
+                    System.out.println("  A lethal strike from the void!");
+                    damage = (int) (damage * 1.5);
+                }
+                System.out.println("  A blade flashes from nowhere — (" + damage + " damage!)");
+                enemy.takeDamage(damage);
+            }
             shadowCharges--;
             isInShadows = false;
             System.out.println("  [Shadow charges: " + shadowCharges + "/" + MAX_SHADOW_CHARGES + "]");

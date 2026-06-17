@@ -47,7 +47,7 @@ public class MiraAct3 {
         
         System.out.println("  1. Defend the villagers. Stand your ground.");
         System.out.println("  2. Use the chaos to slip past the horde toward the Conduit site.");
-        System.out.println("  3. Set a trap using the town's remaining explosive supplies.");
+        System.out.println("  3. [Survival] Set a trap using the town's remaining explosive supplies.");
         
         int choice = InputHandler.getInt(1, 3);
         if (choice == 1) {
@@ -57,8 +57,13 @@ public class MiraAct3 {
             Printer.slowPrint("You vanish into the fog, leaving them to their fate. You have a mission.");
             story.setFlag("mira_abandoned_village", true);
         } else {
-            Printer.slowPrint("You rig up a powder keg near a choke point. It blows a massive hole in the undead ranks.");
-            story.setFlag("mira_used_trap", true);
+            if (util.Dice.performSkillCheck("Survival", 14)) {
+                Printer.slowPrint("You rig up a powder keg near a choke point. It blows a massive hole in the undead ranks.");
+                story.setFlag("mira_used_trap", true);
+            } else {
+                Printer.slowPrint("You try to rig the explosives, but the fuse is damp from the fog.");
+                Printer.slowPrint("It fizzles out. The Ashen swarm over the barricade.");
+            }
         }
         
         if (!CombatSystem.startCombat(mira, Enemy.ashenSoldier())) { handleGameOver(); return; }

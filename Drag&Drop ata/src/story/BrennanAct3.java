@@ -48,14 +48,21 @@ public class BrennanAct3 {
             Printer.slowPrint("\"I was at Millfield,\" he says, handing you your sword. \"I know what Veyran ordered us to do.\"");
             Printer.slowPrint("\"There are a dozen of us willing to fight. But we need a leader.\"");
             
-            System.out.println("  1. Trust them fully and lead the mutiny.");
+            System.out.println("  1. [Leadership] Trust them fully and lead the mutiny.");
             System.out.println("  2. Use them as a distraction to reach Veyran quietly.");
             System.out.println("  3. Tell them to stand down. You won't risk their lives for your vengeance.");
             
             int c = InputHandler.getInt(1, 3);
             if (c == 1) {
-                Printer.slowPrint("\"Then draw steel,\" you tell him. \"We march on the Sanctum.\"");
-                story.setFlag("brennan_led_mutiny", true);
+                if (util.Dice.performSkillCheck("Leadership", 15)) {
+                    Printer.slowPrint("\"Then draw steel,\" you tell him. \"We march on the Sanctum.\"");
+                    Printer.slowPrint("Your words inspire them to fight like lions. The mutiny is an overwhelming success.");
+                    story.setFlag("brennan_led_mutiny", true);
+                } else {
+                    Printer.slowPrint("\"We fight,\" you tell him. But your voice falters.");
+                    Printer.slowPrint("They follow you, but they are terrified. Many will die.");
+                    story.setFlag("brennan_led_mutiny", true);
+                }
             } else if (c == 2) {
                 Printer.slowPrint("\"Hit the armory. Make noise. I'll handle Veyran,\" you instruct.");
             } else {

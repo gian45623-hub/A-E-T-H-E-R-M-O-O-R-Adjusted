@@ -25,9 +25,26 @@ public class Sera extends Character {
             isFocused = true;
             System.out.println("\n  Sera takes a deep breath. Her vision narrows.");
             System.out.println("  Everything else falls away. There is only the target.");
-            int damage = (int)(Math.random() * 50) + 40; // 40-90 focused shot
-            System.out.println("  Her arrow flies true — (" + damage + " damage!)");
-            enemy.takeDamage(damage);
+            
+            int roll = util.Dice.rollD20();
+            System.out.println("  [D20 Roll: " + roll + "]");
+            
+            if (roll == 1) {
+                System.out.println("  *** CRITICAL FAILURE! ***");
+                System.out.println("  Her bowstring snaps! The shot misses completely.");
+            } else {
+                int damage = util.Dice.roll(40, 90);
+                if (roll <= 9) {
+                    System.out.println("  The shot grazes the target...");
+                    damage = damage / 2;
+                } else if (roll == 20) {
+                    System.out.println("  *** CRITICAL SUCCESS! ***");
+                    System.out.println("  A perfect shot straight to the heart!");
+                    damage = (int) (damage * 1.5);
+                }
+                System.out.println("  Her arrow flies — (" + damage + " damage!)");
+                enemy.takeDamage(damage);
+            }
             focusCharges--;
             isFocused = false;
             System.out.println("  [Focus charges: " + focusCharges + "/" + MAX_FOCUS_CHARGES + "]");

@@ -24,10 +24,25 @@ public class Mage extends Character {
     @Override
     public void useSpecialAbility(Enemy enemy) {
         if (rawPowerCharges > 0) {
-            int damage = (int) (Math.random() * 61) + 40;
             System.out.println("\n  " + name + " squeezes her eyes shut. Raw, uncontrolled magic ERUPTS!");
-            System.out.println("  (" + damage + " damage!)");
-            enemy.takeDamage(damage);
+            int roll = util.Dice.rollD20();
+            System.out.println("  [D20 Roll: " + roll + "]");
+            
+            if (roll == 1) {
+                System.out.println("  *** CRITICAL FAILURE! ***");
+                System.out.println("  The magic misfires and dissipates harmlessly into the air.");
+            } else {
+                int damage = util.Dice.roll(40, 100);
+                if (roll <= 9) {
+                    System.out.println("  The eruption is weaker than expected...");
+                    damage = damage / 2;
+                } else if (roll == 20) {
+                    System.out.println("  *** CRITICAL SUCCESS! ***");
+                    damage = (int) (damage * 1.5);
+                }
+                System.out.println("  (" + damage + " damage!)");
+                enemy.takeDamage(damage);
+            }
             rawPowerCharges--;
             System.out.println("  [Raw Power charges: " + rawPowerCharges + "/" + MAX_RAW_CHARGES + "]");
         } else {
@@ -51,8 +66,25 @@ public class Mage extends Character {
     }
 
     public void useManaSkill() {
+        int roll = util.Dice.rollD20();
+        System.out.println("  [D20 Roll: " + roll + "]");
+        
         int hpCost = 20;
         int manaGain = 30;
+        
+        if (roll == 1) {
+            System.out.println("  *** CRITICAL FAILURE! ***");
+            System.out.println("  " + name + " sacrifices " + hpCost + " HP but the spell fails to siphon any mana!");
+            this.hp = Math.max(1, this.hp - hpCost);
+            return;
+        } else if (roll <= 9) {
+            System.out.println("  The siphon is weak.");
+            manaGain = manaGain / 2;
+        } else if (roll == 20) {
+            System.out.println("  *** CRITICAL SUCCESS! ***");
+            manaGain = (int) (manaGain * 1.5);
+        }
+        
         this.hp = Math.max(1, this.hp - hpCost);
         this.mana = Math.min(this.maxMana, this.mana + manaGain);
         System.out.println("  " + name + " sacrifices " + hpCost + " HP to restore " + manaGain + " mana.");

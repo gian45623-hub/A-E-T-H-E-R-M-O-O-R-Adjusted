@@ -48,13 +48,19 @@ public class SeraAct3 {
         Printer.slowPrint("Guards patrol the perimeter. Ashen Soldiers, their eyes devoid of humanity, fused with their armor.");
         
         System.out.println("  How do you clear the perimeter?");
-        System.out.println("  1. Snipe them from the shadows. Pick them off one by one.");
+        System.out.println("  1. [Stealth] Snipe them from the shadows. Pick them off one by one.");
         System.out.println("  2. Trigger an explosion with black powder to distract the main force.");
         System.out.println("  3. Walk right in with your blades drawn.");
         int choice = InputHandler.getInt(1, 3);
         
         if (choice == 1) {
-            Printer.slowPrint("Two fall before they even know they are under attack. But the rest swarm your position.");
+            if (util.Dice.performSkillCheck("Stealth", 15)) {
+                Printer.slowPrint("Two fall before they even know they are under attack. But the rest swarm your position.");
+            } else {
+                Printer.slowPrint("You draw your bow, but a dry twig snaps under your boot.");
+                Printer.slowPrint("They turn immediately and open fire.");
+                sera.heal(-15);
+            }
         } else if (choice == 2) {
             Printer.slowPrint("The explosion rocks the ruins. Most of the guards run toward the fire, leaving only a few.");
             story.setFlag("sera_used_explosives", true);

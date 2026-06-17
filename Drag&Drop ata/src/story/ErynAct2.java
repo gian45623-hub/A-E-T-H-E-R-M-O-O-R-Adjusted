@@ -177,17 +177,23 @@ public class ErynAct2 {
         Printer.slowPrint("Lights in the upper windows. Guards at the doors — Valdros's rogue arcanists.");
         System.out.println();
         System.out.println("  How do you get inside?");
-        System.out.println("  1. Pose as a recruit. Walk in the front.");
+        System.out.println("  1. [Deception] Pose as a recruit. Walk in the front.");
         System.out.println("  2. Find the maintenance coal chute — you know this building.");
         System.out.println("  3. Create a distraction and slip in during the chaos.");
 
         int choice = InputHandler.getInt(1, 3);
         switch (choice) {
             case 1 -> {
-                Printer.slowPrint("You know the Circle's old recruitment phrases. You wrote some of them.");
-                Printer.slowPrint("The guard asks for a sigil. You draw one from memory — three years out of date.");
-                Printer.slowPrint("He doesn't notice. You're in.");
-                story.setFlag("eryn_infiltrated_front", true);
+                if (util.Dice.performSkillCheck("Deception", 13)) {
+                    Printer.slowPrint("You know the Circle's old recruitment phrases. You wrote some of them.");
+                    Printer.slowPrint("The guard asks for a sigil. You draw one from memory — three years out of date.");
+                    Printer.slowPrint("He doesn't notice. You're in.");
+                    story.setFlag("eryn_infiltrated_front", true);
+                } else {
+                    Printer.slowPrint("You try to bluff your way in, but the guard immediately recognizes you.");
+                    Printer.slowPrint("\"Eryn Voss...\" he whispers, reaching for his weapon.");
+                    Printer.slowPrint("You have to blast him with magic and run around to the side entrance.");
+                }
             }
             case 2 -> {
                 Printer.slowPrint("The east foundation has a coal chute. You spent enough time here to know.");

@@ -46,7 +46,7 @@ public class BrennanAct2 {
         System.out.println("  Where do you lie low?");
         System.out.println("  1. The Ashen Tap (a rough, underground mercenary tavern)");
         System.out.println("  2. The refugee camp just outside the city walls");
-        System.out.println("  3. Your old contact Ser Dovin's safehouse in the merchant quarter");
+        System.out.println("  3. [Persuasion] Your old contact Ser Dovin's safehouse in the merchant quarter");
         
         int c = InputHandler.getInt(1, 3);
         switch (c) {
@@ -63,10 +63,16 @@ public class BrennanAct2 {
                 brennan.heal(30);
             }
             case 3 -> {
-                Printer.slowPrint("You knock on Dovin's door in a specific rhythm. He opens it, his face draining of color.");
-                Printer.slowPrint("\"Brennan... are you insane?\" he hisses, pulling you inside.");
-                Printer.slowPrint("Dovin looks terrified. \"Veyran is planning a city-wide purge tonight. Anyone suspected of treason.\"");
-                story.setFlag("brennan_knows_purge_incoming", true);
+                if (util.Dice.performSkillCheck("Persuasion", 14)) {
+                    Printer.slowPrint("You knock on Dovin's door in a specific rhythm. He opens it, his face draining of color.");
+                    Printer.slowPrint("\"Brennan... are you insane?\" he hisses, pulling you inside.");
+                    Printer.slowPrint("Dovin looks terrified. \"Veyran is planning a city-wide purge tonight. Anyone suspected of treason.\"");
+                    story.setFlag("brennan_knows_purge_incoming", true);
+                } else {
+                    Printer.slowPrint("You knock on Dovin's door. He opens it, sees you, and slams it shut.");
+                    Printer.slowPrint("\"I don't know you! Go away before they kill us both!\" he shouts through the wood.");
+                    Printer.slowPrint("You have to hide in the alleys instead.");
+                }
             }
         }
         

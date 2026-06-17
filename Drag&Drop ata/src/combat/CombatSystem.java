@@ -19,7 +19,8 @@ public class CombatSystem {
 
         while (player.isAlive() && enemy.isAlive()) {
             playerTurn(player, enemy);
-            if (!enemy.isAlive()) break;
+            if (!enemy.isAlive())
+                break;
             System.out.println();
             enemyTurn(player, enemy);
             System.out.println();
@@ -37,14 +38,33 @@ public class CombatSystem {
         if (player.isAlive()) {
             Printer.printDivider();
             Printer.slowPrint("✅  " + enemy.getName() + " has been defeated.");
-            if (Math.random() < 0.30) {
-                if (Math.random() < 0.5) {
+            Printer.slowPrint("  Searching the enemy for loot...");
+            int lootRoll = util.Dice.rollD20();
+            System.out.println("  [Loot D20 Roll: " + lootRoll + "]");
+            
+            if (lootRoll == 1) {
+                System.out.println("  *** CRITICAL FAILURE! ***");
+                System.out.println("  You accidentally crush one of your own potions while looting!");
+                if (player.getHealthPotions() > 0) {
+                    player.useHealthPotion(); // consumes it without healing
+                } else if (player.getManaPotions() > 0) {
+                    player.useManaPotion(); // consumes it without restoring
+                }
+            } else if (lootRoll >= 15 && lootRoll <= 19) {
+                if (util.Dice.roll(1, 2) == 1) {
                     player.addHealthPotion();
                     Printer.slowPrint("✨  You found a Health Potion!");
                 } else {
                     player.addManaPotion();
                     Printer.slowPrint("✨  You found a Mana Potion!");
                 }
+            } else if (lootRoll == 20) {
+                System.out.println("  *** CRITICAL SUCCESS! ***");
+                player.addHealthPotion();
+                player.addManaPotion();
+                Printer.slowPrint("✨  You found a hidden stash! +1 Health Potion, +1 Mana Potion!");
+            } else {
+                Printer.slowPrint("  You find nothing of value.");
             }
             Printer.printDivider();
             InputHandler.waitForEnter();
@@ -74,9 +94,15 @@ public class CombatSystem {
             int choice = InputHandler.getInt(1, 4);
 
             switch (choice) {
-                case 1 -> { basicAttack(player, enemy); turnTaken = true; }
+                case 1 -> {
+                    basicAttack(player, enemy);
+                    turnTaken = true;
+                }
                 case 2 -> turnTaken = useSkill(player, enemy);
-                case 3 -> { player.useSpecialAbility(enemy); turnTaken = true; }
+                case 3 -> {
+                    player.useSpecialAbility(enemy);
+                    turnTaken = true;
+                }
                 case 4 -> turnTaken = useItem(player);
             }
         }
@@ -101,26 +127,69 @@ public class CombatSystem {
             return false;
         }
 
+        int roll = util.Dice.rollD20();
+
         if (choice == 1) {
             player.useHealthPotion();
-            System.out.println("\n  " + player.getName() + " uses a Health Potion!");
-            player.heal(50);
+            System.out.println("\n  " + player.getName() + " attempts to use a Health Potion!");
+            System.out.println("  [D20 Roll: " + roll + "]");
+
+            if (roll == 1) {
+                System.out.println("  *** CRITICAL FAILURE! ***");
+                System.out.println("  The potion slips from your grasp and shatters on the floor! Wasted.");
+            } else if (roll <= 9) {
+                System.out.println("  You spill some in the heat of battle.");
+                player.heal(25);
+            } else if (roll == 20) {
+                System.out.println("  *** CRITICAL SUCCESS! ***");
+                System.out.println("  You drink every last drop! Maximum effect.");
+                player.heal(100);
+            } else {
+                player.heal(50);
+            }
         } else {
             player.useManaPotion();
-            System.out.println("\n  " + player.getName() + " uses a Mana Potion!");
-            player.restoreMana(30);
+            System.out.println("\n  " + player.getName() + " attempts to use a Mana Potion!");
+            System.out.println("  [D20 Roll: " + roll + "]");
+
+            if (roll == 1) {
+                System.out.println("  *** CRITICAL FAILURE! ***");
+                System.out.println("  The potion slips from your grasp and shatters on the floor! Wasted.");
+            } else if (roll <= 9) {
+                System.out.println("  You spill some in the heat of battle.");
+                player.restoreMana(15);
+            } else if (roll == 20) {
+                System.out.println("  *** CRITICAL SUCCESS! ***");
+                System.out.println("  You drink every last drop! Maximum effect.");
+                player.restoreMana(60);
+            } else {
+                player.restoreMana(30);
+            }
         }
         return true;
     }
 
     private static void basicAttack(Character player, Enemy enemy) {
-        int damage = player.getAttackPower() + (int)(Math.random() * 10);
         System.out.println("\n  " + player.getName() + " attacks!");
-        boolean isCrit = Math.random() < 0.15;
-        if (isCrit) {
-            System.out.println("  *** CRITICAL HIT! ***");
-            damage = (int)(damage * 1.5);
+        int roll = util.Dice.rollD20();
+        System.out.println("  [D20 Roll: " + roll + "]");
+
+        if (roll == 1) {
+            System.out.println("  *** CRITICAL FAILURE! ***");
+            System.out.println("  " + player.getName() + " missed the attack completely!");
+            return;
         }
+
+        int damage = player.getAttackPower() + util.Dice.roll(0, 9);
+
+        if (roll <= 9) {
+            System.out.println("  A weak hit...");
+            damage = damage / 2;
+        } else if (roll == 20) {
+            System.out.println("  *** CRITICAL HIT! ***");
+            damage = (int) (damage * 1.5);
+        }
+
         enemy.takeDamage(damage);
     }
 
@@ -128,9 +197,9 @@ public class CombatSystem {
         System.out.println("\n  Choose a skill:");
         var skills = player.getSkills();
         for (int i = 0; i < skills.size(); i++) {
-            System.out.println("  " + (i+1) + ". " + skills.get(i));
+            System.out.println("  " + (i + 1) + ". " + skills.get(i));
         }
-        System.out.println("  " + (skills.size()+1) + ". Cancel");
+        System.out.println("  " + (skills.size() + 1) + ". Cancel");
 
         int choice = InputHandler.getInt(1, skills.size() + 1);
         if (choice == skills.size() + 1) {
@@ -152,38 +221,75 @@ public class CombatSystem {
 
         player.setMana(player.getMana() - chosen.getManaCost());
 
+        System.out.println("\n  " + player.getName() + " casts " + chosen.getName() + "!");
+        int roll = util.Dice.rollD20();
+        System.out.println("  [D20 Roll: " + roll + "]");
+
+        if (roll == 1) {
+            System.out.println("  *** CRITICAL FAILURE! ***");
+            System.out.println("  The skill backfires or fizzles out completely. Mana wasted!");
+            return true;
+        }
+
         if (chosen.getPower() < 0) {
             // Healing skill
-            player.heal(Math.abs(chosen.getPower()));
+            int healAmount = Math.abs(chosen.getPower());
+            if (roll <= 9) {
+                System.out.println("  The healing magic is weak...");
+                healAmount = healAmount / 2;
+            } else if (roll == 20) {
+                System.out.println("  *** CRITICAL SUCCESS! ***");
+                System.out.println("  The healing magic surges powerfully!");
+                healAmount = (int) (healAmount * 1.5);
+            }
+            player.heal(healAmount);
         } else if (chosen.getPower() == 0) {
             // Utility skill
-            applyUtilityEffect(player, enemy, chosen.getName());
+            applyUtilityEffect(player, enemy, chosen.getName(), roll);
         } else {
             // Damage skill
-            System.out.println("\n  " + player.getName() + " uses " + chosen.getName() + "!");
             int damage = chosen.getPower();
-            boolean isCrit = Math.random() < 0.15;
-            if (isCrit) {
+            if (roll <= 9) {
+                System.out.println("  A glancing blow...");
+                damage = damage / 2;
+            } else if (roll == 20) {
                 System.out.println("  *** CRITICAL HIT! ***");
-                damage = (int)(damage * 1.5);
+                damage = (int) (damage * 1.5);
             }
             enemy.takeDamage(damage);
         }
         return true;
     }
 
-    private static void applyUtilityEffect(Character player, Enemy enemy, String skillName) {
+    private static void applyUtilityEffect(Character player, Enemy enemy, String skillName, int roll) {
         switch (skillName) {
             case "Intimidate" -> {
                 System.out.println("\n  " + player.getName() + " lets out a thunderous shout!");
+                int debuff = -10;
+                if (roll <= 9) {
+                    System.out.println("  The shout is a bit weak.");
+                    debuff = -5;
+                } else if (roll == 20) {
+                    System.out.println("  *** CRITICAL SUCCESS! ***");
+                    System.out.println("  A terrifying roar!");
+                    debuff = -15;
+                }
                 System.out.println("  " + enemy.getName() + " flinches — attack reduced for 2 turns.");
-                enemy.applyAttackDebuff(-10, 2);
+                enemy.applyAttackDebuff(debuff, 2);
             }
             case "War Cry" -> {
                 if (player instanceof Knight k) {
-                    k.applyWarCry();
+                    k.applyWarCry(roll);
                 } else {
                     int boost = 15;
+                    if (roll <= 9) {
+                        System.out.println("  A weak battle cry.");
+                        boost = 7;
+                    } else if (roll == 20) {
+                        System.out.println("  *** CRITICAL SUCCESS! ***");
+                        System.out.println("  An inspiring roar!");
+                        boost = 22;
+                    }
                     player.applyAttackBuff(boost, 3);
                     System.out.println("\n  " + player.getName() + " roars a battle cry!");
                     System.out.println("  Attack +" + boost + " for 3 turns.");
@@ -193,15 +299,25 @@ public class CombatSystem {
                 System.out.println("\n  " + player.getName() + " channels purifying light!");
                 System.out.println("  The corruption within " + enemy.getName() + " writhes in pain.");
                 int damage = 20;
-                boolean isCrit = Math.random() < 0.15;
-                if (isCrit) {
+                if (roll <= 9) {
+                    System.out.println("  The light flickers weakly.");
+                    damage = 10;
+                } else if (roll == 20) {
                     System.out.println("  *** CRITICAL HIT! ***");
-                    damage = (int)(damage * 1.5);
+                    damage = 30;
                 }
                 enemy.takeDamage(damage);
             }
             case "Sacred Shield" -> {
                 int defBoost = 15;
+                if (roll <= 9) {
+                    System.out.println("  The shield is thin.");
+                    defBoost = 7;
+                } else if (roll == 20) {
+                    System.out.println("  *** CRITICAL SUCCESS! ***");
+                    System.out.println("  An impenetrable barrier forms!");
+                    defBoost = 25;
+                }
                 player.applyDefenseBuff(defBoost, 2);
                 System.out.println("\n  A golden shield of light forms around " + player.getName() + ".");
                 System.out.println("  Defense +" + defBoost + " for 2 turns.");
@@ -211,8 +327,26 @@ public class CombatSystem {
     }
 
     private static void enemyTurn(Character player, Enemy enemy) {
-        int damage = enemy.attackPlayer();
         System.out.println("  " + enemy.getName() + " attacks " + player.getName() + "!");
+        int roll = util.Dice.rollD20();
+        System.out.println("  [Enemy D20 Roll: " + roll + "]");
+
+        if (roll == 1) {
+            System.out.println("  *** CRITICAL FAILURE! ***");
+            System.out.println("  " + enemy.getName() + " stumbles and misses completely!");
+            return;
+        }
+
+        int damage = enemy.attackPlayer();
+
+        if (roll <= 9) {
+            System.out.println("  A weak attack...");
+            damage = damage / 2;
+        } else if (roll == 20) {
+            System.out.println("  *** CRITICAL HIT! ***");
+            damage = (int) (damage * 1.5);
+        }
+
         player.takeDamage(damage);
     }
 }

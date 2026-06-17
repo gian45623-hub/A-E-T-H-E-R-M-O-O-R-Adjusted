@@ -80,7 +80,7 @@ public class MiraAct1 {
         System.out.println("  How do you prepare?");
         System.out.println("  1. Sneak upstairs immediately. The faster, the better.");
         System.out.println("  2. Mingle with the nobles to gather information first.");
-        System.out.println("  3. Flirt with a guard to learn the patrol routes.");
+        System.out.println("  3. [Charisma] Flirt with a guard to learn the patrol routes.");
         int c = InputHandler.getInt(1, 3);
         
         if (c == 2) {
@@ -88,9 +88,15 @@ public class MiraAct1 {
             Printer.slowPrint("\"Cost Lord Vael a fortune. Magical wards,\" one snickers.");
             story.setFlag("mira_knows_arcanist", true);
         } else if (c == 3) {
-            Printer.slowPrint("A few smiles, a light touch on the arm, and the guard happily tells you the shift timings.");
-            Printer.slowPrint("You know exactly when the corridor will be empty.");
-            story.setFlag("mira_knows_patrols", true);
+            if (util.Dice.performSkillCheck("Charisma", 11)) {
+                Printer.slowPrint("A few smiles, a light touch on the arm, and the guard happily tells you the shift timings.");
+                Printer.slowPrint("You know exactly when the corridor will be empty.");
+                story.setFlag("mira_knows_patrols", true);
+            } else {
+                Printer.slowPrint("You try to charm the guard, but he looks at you suspiciously.");
+                Printer.slowPrint("\"Stay in the ballroom, 'Lady Corren',\" he says sharply.");
+                Printer.slowPrint("You have to back away before you draw more attention.");
+            }
         } else {
             Printer.slowPrint("You slip away from the crowd, relying entirely on your instincts.");
         }

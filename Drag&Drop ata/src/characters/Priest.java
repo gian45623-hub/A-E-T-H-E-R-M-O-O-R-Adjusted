@@ -26,8 +26,29 @@ public class Priest extends Character {
         if (faithPoints > 0) {
             System.out.println("\n  " + name + " closes her eyes. She doesn't know if anyone is listening.");
             System.out.println("  She prays anyway.");
-            heal(40);
-            this.defense += 8;
+            
+            int roll = util.Dice.rollD20();
+            System.out.println("  [D20 Roll: " + roll + "]");
+            
+            if (roll == 1) {
+                System.out.println("  *** CRITICAL FAILURE! ***");
+                System.out.println("  The prayer goes unanswered. No healing received.");
+            } else {
+                int healAmount = 40;
+                int defAmount = 8;
+                if (roll <= 9) {
+                    System.out.println("  A faint light responds.");
+                    healAmount = healAmount / 2;
+                    defAmount = defAmount / 2;
+                } else if (roll == 20) {
+                    System.out.println("  *** CRITICAL SUCCESS! ***");
+                    System.out.println("  A blinding light envelops her!");
+                    healAmount = (int) (healAmount * 1.5);
+                    defAmount = (int) (defAmount * 1.5);
+                }
+                heal(healAmount);
+                this.defense += defAmount;
+            }
             faithPoints--;
             System.out.println("  [Faith Points: " + faithPoints + "/" + MAX_FAITH + "]");
         } else {

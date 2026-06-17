@@ -63,7 +63,7 @@ public class MiraAct2 {
         
         System.out.println("  How do you crack the vault?");
         System.out.println("  1. Use your specialized acid to melt the internal tumblers.");
-        System.out.println("  2. Pick it manually. It's risky, but leaves no trace.");
+        System.out.println("  2. [Sleight of Hand] Pick it manually. It's risky, but leaves no trace.");
         System.out.println("  3. Try the keys you found on the dead cultist.");
         
         int choice = InputHandler.getInt(1, 3);
@@ -71,8 +71,13 @@ public class MiraAct2 {
             Printer.slowPrint("The acid hisses, eating through the metal. The door swings open with a groan.");
             story.setFlag("mira_melted_vault", true);
         } else if (choice == 2) {
-            Printer.slowPrint("It takes ten agonizing minutes, but you hear the satisfying 'click'. You are a master.");
-            story.setFlag("mira_picked_vault", true);
+            if (util.Dice.performSkillCheck("Sleight of Hand", 15)) {
+                Printer.slowPrint("It takes ten agonizing minutes, but you hear the satisfying 'click'. You are a master.");
+                story.setFlag("mira_picked_vault", true);
+            } else {
+                Printer.slowPrint("Your pick slips. A mechanical trap snaps shut on your tool, breaking it.");
+                Printer.slowPrint("You curse and resort to the keys.");
+            }
         } else {
             Printer.slowPrint("The key fits perfectly. They really did give the cultists full access.");
         }

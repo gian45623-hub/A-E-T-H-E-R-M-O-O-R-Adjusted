@@ -94,13 +94,18 @@ public class SeraAct2 {
         Printer.slowPrint("The crescent moon over a sword.");
         story.setFlag("sera_has_conspiracy_letters", true);
         
-        System.out.println("  1. Read further into the ledgers.");
+        System.out.println("  1. [Investigation] Read further into the ledgers.");
         System.out.println("  2. Pack them up immediately. It's not safe here.");
         
         if (InputHandler.getInt(1, 2) == 1) {
-            Printer.slowPrint("You find a reference to 'Stage Two' and a location in the deepest part of the eastern scar.");
-            Printer.slowPrint("They aren't just starting a war. They are building something.");
-            story.setFlag("sera_knows_stage_two", true);
+            if (util.Dice.performSkillCheck("Investigation", 13)) {
+                Printer.slowPrint("You find a reference to 'Stage Two' and a location in the deepest part of the eastern scar.");
+                Printer.slowPrint("They aren't just starting a war. They are building something.");
+                story.setFlag("sera_knows_stage_two", true);
+            } else {
+                Printer.slowPrint("You try to make sense of the chaotic accounts, but the ledgers are written in a strange cipher.");
+                Printer.slowPrint("You hear distant footsteps outside. You have to pack up before you get caught.");
+            }
         }
         InputHandler.waitForEnter();
     }
