@@ -6,18 +6,40 @@ import java.util.concurrent.BlockingQueue;
 public class InputHandler {
     private static final BlockingQueue<String> inputQueue = new ArrayBlockingQueue<>(1);
 
+    private static Thread gameThread;
+
+    public static void setGameThread(Thread thread) {
+        gameThread = thread;
+    }
+
     public static void submitInput(String input) {
+        if ("RESTART_GAME_SIGNAL".equals(input) || input.startsWith("SKIP_ENDING:")) {
+            inputQueue.clear();
+            if (gameThread != null) {
+                gameThread.interrupt();
+            }
+        }
         inputQueue.offer(input);
     }
 
     private static String takeInput() {
         try {
             String input = inputQueue.take();
+            if ("RESTART_GAME_SIGNAL".equals(input)) {
+                throw new RuntimeException("RESTART_GAME");
+            }
+            if (input.startsWith("SKIP_ENDING:")) {
+                throw new RuntimeException(input);
+            }
             util.Printer.setSkipDialogue(false);
             return input;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            return "";
+            String pending = inputQueue.poll();
+            if (pending != null && pending.startsWith("SKIP_ENDING:")) {
+                throw new RuntimeException(pending);
+            }
+            throw new RuntimeException("RESTART_GAME");
         }
     }
 
@@ -36,6 +58,14 @@ public class InputHandler {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid selection.");
+            }
+            
+            if (Thread.currentThread().isInterrupted()) {
+                String pending = inputQueue.poll();
+                if (pending != null && pending.startsWith("SKIP_ENDING:")) {
+                    throw new RuntimeException(pending);
+                }
+                throw new RuntimeException("RESTART_GAME");
             }
         }
 

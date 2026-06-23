@@ -4,36 +4,57 @@ import engine.*;
 import util.*;
 
 public class Main {
+    public static Thread gameThread;
 
     public static void main(String[] args) {
+        // init UI on event dispatch thread
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            ui.MainFrame app = ui.MainFrame.getInstance();
+            app.addPanel(new ui.MainMenuPanel(), "MENU");
+            app.addPanel(new ui.CreditsPanel(), "CREDITS");
+            app.addPanel(new ui.CharacterSelectPanel(), "SELECT");
+            app.addPanel(new ui.GamePanel(), "GAME");
+            app.showPanel("MENU");
+            app.setVisible(true);
+        });
+
         // para sa game logic para hindi mag freeze ang UI
-        new Thread(() -> {
-            // ni initailize ang main frame para sa game
-            javax.swing.SwingUtilities.invokeLater(() -> {
-                ui.MainFrame app = ui.MainFrame.getInstance();
-                app.addPanel(new ui.MainMenuPanel(), "MENU");
-                app.addPanel(new ui.CreditsPanel(), "CREDITS");
-                app.addPanel(new ui.CharacterSelectPanel(), "SELECT");
-                app.addPanel(new ui.GamePanel(), "GAME");
-                app.showPanel("MENU");
-                app.setVisible(true);
-            });
+        gameThread = new Thread(() -> {
+            util.InputHandler.setGameThread(Thread.currentThread());
+            boolean skipMenu = false;
+            while (true) {
+                try {
+                    Character player = null;
+                    while (player == null) {
+                        if (!skipMenu) {
+                            showMainMenu();
+                        }
+                        skipMenu = false;
+                        player = chooseCharacter();
+                    }
 
-            Character player = null;
-            while (player == null) {
-                showMainMenu();
-                player = chooseCharacter();
+                    // para lumipat ng panel
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        ui.MainFrame.getInstance().showPanel("GAME");
+                    });
+
+                    StoryManager storyManager = new StoryManager(player);
+                    GameEngine engine = new GameEngine(player, storyManager);
+                    engine.start();
+                } catch (RuntimeException e) {
+                    if ("RESTART_GAME".equals(e.getMessage())) {
+                        // Game was interrupted to return to Character Select
+                        // Clear the interrupted status
+                        Thread.interrupted();
+                        skipMenu = true;
+                        continue;
+                    } else {
+                        e.printStackTrace();
+                    }
+                }
             }
-
-            // para lumipat ng panel
-            javax.swing.SwingUtilities.invokeLater(() -> {
-                ui.MainFrame.getInstance().showPanel("GAME");
-            });
-
-            StoryManager storyManager = new StoryManager(player);
-            GameEngine engine = new GameEngine(player, storyManager);
-            engine.start();
-        }).start();
+        });
+        gameThread.start();
     }
 
     private static void showMainMenu() {

@@ -31,12 +31,14 @@ public class Knight extends Character {
             System.out.println("\n  Something snaps inside " + name + ".");
             System.out.println("  He stops thinking. He just FIGHTS.");
             
+            
             int roll = util.Dice.rollD20();
             System.out.println("  [D20 Roll: " + roll + "]");
             
             if (roll == 1) {
                 System.out.println("  *** CRITICAL FAILURE! ***");
                 System.out.println("  He tries to enter a rage but just gets a headache instead!");
+                System.out.println(" 'RAHHHHHHHHH!!!!' - Brennan Ashvane");
             } else {
                 isRaging = true;
                 rageTurnsLeft = 3;
@@ -44,10 +46,13 @@ public class Knight extends Character {
                 
                 if (roll <= 9) {
                     System.out.println("  It's a weak rage.");
+                    System.out.println("  He lets out a weak cry. and then a small hiccup.");
+                    System.out.println(" 'eeehhhhhhhh....... ' - Brennan Ashvane");
                     boost = 10;
                 } else if (roll == 20) {
                     System.out.println("  *** CRITICAL SUCCESS! ***");
                     System.out.println("  An unparalleled bloodlust takes over!");
+                    System.out.println(" 'I WILL SLAUGHTER YOU ALL!!!!' - Brennan Ashvane");
                     boost = 30;
                 }
                 this.attackPower += boost;
@@ -82,10 +87,12 @@ public class Knight extends Character {
         int boost = 12;
         if (roll <= 9) {
             System.out.println("  A weak battle cry.");
+            System.out.println(" 'heh.....' - Brennan Ashvane");
             boost = 6;
         } else if (roll == 20) {
             System.out.println("  *** CRITICAL SUCCESS! ***");
             System.out.println("  An inspiring roar!");
+            System.out.println(" 'FIGHT FOR VALORIA!!!' - Brennan Ashvane");
             boost = 18;
         }
         this.warCryBoost = boost;

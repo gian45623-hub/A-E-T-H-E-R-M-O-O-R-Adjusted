@@ -26,6 +26,7 @@ public class Priest extends Character {
         if (faithPoints > 0) {
             System.out.println("\n  " + name + " closes her eyes. She doesn't know if anyone is listening.");
             System.out.println("  She prays anyway.");
+            System.out.println("Dear God, I know I haven't been the best... - Solia Ren");
             
             int roll = util.Dice.rollD20();
             System.out.println("  [D20 Roll: " + roll + "]");
@@ -38,11 +39,13 @@ public class Priest extends Character {
                 int defAmount = 8;
                 if (roll <= 9) {
                     System.out.println("  A faint light responds.");
+                    System.out.println("What's up Fam? - Solia Ren");
                     healAmount = healAmount / 2;
                     defAmount = defAmount / 2;
                 } else if (roll == 20) {
                     System.out.println("  *** CRITICAL SUCCESS! ***");
                     System.out.println("  A blinding light envelops her!");
+                    System.out.println("I'm back baby! - Solia Ren");
                     healAmount = (int) (healAmount * 1.5);
                     defAmount = (int) (defAmount * 1.5);
                 }

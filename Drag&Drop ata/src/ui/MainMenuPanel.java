@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,8 +22,23 @@ public class MainMenuPanel extends JPanel {
 
     private final Color fgColor = new Color(220, 215, 200);
 
+    private Image backgroundImage;
+
     public MainMenuPanel() {
+        try {
+            backgroundImage = ImageIO.read(getClass().getResource("/images/main_menu_bg.jpg"));
+        } catch (Exception e) {
+            System.err.println("Failed to load background image: " + e.getMessage());
+        }
         initialize();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 
     private void initialize() {
@@ -37,7 +55,7 @@ public class MainMenuPanel extends JPanel {
         JLabel lblSubtitle = new JLabel(".A Broken Kingdom.  .Lost Souls.  .One Truth To Uncover.",
                 SwingConstants.CENTER);
         lblSubtitle.setFont(new Font("SansSerif", Font.PLAIN, 24));
-        lblSubtitle.setForeground(fgColor.darker());
+        lblSubtitle.setForeground(Color.WHITE);
         lblSubtitle.setBounds(0, 250, 1366, 50);
         add(lblSubtitle);
 

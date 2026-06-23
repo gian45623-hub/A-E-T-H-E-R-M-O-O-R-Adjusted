@@ -17,8 +17,22 @@ public class GameEngine {
     }
 
     public void start() {
-        showIntro();
-        runStory(); // start ng game/story
+        try {
+            showIntro();
+            runStory(); // start ng game/story
+        } catch (RuntimeException e) {
+            if (e.getMessage() != null && e.getMessage().startsWith("SKIP_ENDING:")) {
+                String endingKey = e.getMessage().substring("SKIP_ENDING:".length());
+                Thread.interrupted(); // clear interrupted status
+                showForcedEnding(endingKey);
+            } else {
+                throw e;
+            }
+        }
+        
+        Printer.printDivider();
+        Printer.slowPrint("The journey concludes. Thank you for playing Aethermoor.");
+        InputHandler.waitForEnter();
     }
 
     private void showIntro() {
@@ -90,10 +104,28 @@ public class GameEngine {
         showSeraEnding(sera); // sera vesryn story
     }
 
+    private void showForcedEnding(String endingKey) {
+        if (endingKey.startsWith("MAGE_")) {
+            showMageEnding(null, endingKey);
+        } else if (endingKey.startsWith("KNIGHT_")) {
+            showKnightEnding(null, endingKey);
+        } else if (endingKey.startsWith("PRIEST_")) {
+            showPriestEnding(null, endingKey);
+        } else if (endingKey.startsWith("MIRA_")) {
+            showMiraEnding(null, endingKey);
+        } else if (endingKey.startsWith("SERA_")) {
+            showSeraEnding(null, endingKey);
+        }
+    }
+
     private void showMageEnding(Mage mage) {
+        showMageEnding(mage, null);
+    }
+
+    private void showMageEnding(Mage mage, String forcedEnding) {
         Printer.printTitle("EPILOGUE — ERYN VOSS");
-        String ending = storyManager.determineMageEnding();
-        if (ending.equals("BLIND")) {
+        String ending = forcedEnding != null ? forcedEnding : storyManager.determineMageEnding();
+        if (ending.equals("BLIND") || ending.equals("MAGE_BLIND")) {
             Printer.slowPrint("Eryn defeats Valdros. The raw power tears through her.");
             Printer.slowPrint("She wakes in darkness. Permanent. She will never cast again.");
             Printer.slowPrint("She writes down everything she knows. Every truth. Every name.");
@@ -108,9 +140,13 @@ public class GameEngine {
     }
 
     private void showKnightEnding(Knight knight) {
+        showKnightEnding(knight, null);
+    }
+
+    private void showKnightEnding(Knight knight, String forcedEnding) {
         Printer.printTitle("EPILOGUE — BRENNAN ASHVANE");
-        String ending = storyManager.determineKnightEnding();
-        if (ending.equals("OUTCAST")) {
+        String ending = forcedEnding != null ? forcedEnding : storyManager.determineKnightEnding();
+        if (ending.equals("OUTCAST") || ending.equals("KNIGHT_OUTCAST")) {
             Printer.slowPrint("Brennan kills Veyran with his own hands in the great hall.");
             Printer.slowPrint("The Iron Vow brands him a criminal. He walks out at dawn. Free, and exiled.");
             Printer.pause(500);
@@ -124,9 +160,13 @@ public class GameEngine {
     }
 
     private void showPriestEnding(Priest priest) {
+        showPriestEnding(priest, null);
+    }
+
+    private void showPriestEnding(Priest priest, String forcedEnding) {
         Printer.printTitle("EPILOGUE — SOLIA REN");
-        String ending = storyManager.determinePriestEnding();
-        if (ending.equals("ASHES")) {
+        String ending = forcedEnding != null ? forcedEnding : storyManager.determinePriestEnding();
+        if (ending.equals("ASHES") || ending.equals("PRIEST_ASHES")) {
             Printer.slowPrint("Solia destroys the Pyre Conduit. And the Vault with it.");
             Printer.slowPrint("She walks out into the ash and begins again. From nothing.");
             Printer.pause(500);
@@ -140,12 +180,16 @@ public class GameEngine {
     }
 
     private void showMiraEnding(Mira mira) {
+        showMiraEnding(mira, null);
+    }
+
+    private void showMiraEnding(Mira mira, String forcedEnding) {
         Printer.printTitle("EPILOGUE — MIRA CAEL");
-        String ending = storyManager.getCharacterEnding(mira);
-        if (ending.equals("GHOST")) {
+        String ending = forcedEnding != null ? forcedEnding : storyManager.getCharacterEnding(mira);
+        if (ending.equals("GHOST") || ending.equals("MIRA_GHOST")) {
             Printer.slowPrint("Mira vanishes with Lena into clean country air. The ledgers burn unread.");
             Printer.printBox("ENDING: THE GHOST");
-        } else if (ending.equals("MERCHANT")) {
+        } else if (ending.equals("MERCHANT") || ending.equals("MIRA_MERCHANT")) {
             Printer.slowPrint("The proof sells to the highest bidder. Lena lives. The machine keeps running.");
             Printer.printBox("ENDING: THE PRICE PAID");
         } else {
@@ -155,12 +199,16 @@ public class GameEngine {
     }
 
     private void showSeraEnding(Sera sera) {
+        showSeraEnding(sera, null);
+    }
+
+    private void showSeraEnding(Sera sera, String forcedEnding) {
         Printer.printTitle("EPILOGUE — SERA CALDWELL");
-        String ending = storyManager.getCharacterEnding(sera);
-        if (ending.equals("LONE_ROAD")) {
+        String ending = forcedEnding != null ? forcedEnding : storyManager.getCharacterEnding(sera);
+        if (ending.equals("LONE_ROAD") || ending.equals("SERA_LONE_ROAD")) {
             Printer.slowPrint("Sera walks the eastern roads alone. No commission. No crown. Only the compass.");
             Printer.printBox("ENDING: THE LONE ROAD");
-        } else if (ending.equals("SILENCE")) {
+        } else if (ending.equals("SILENCE") || ending.equals("SERA_SILENCE")) {
             Printer.slowPrint("She takes the payment. Corvin stays a footnote. The war continues.");
             Printer.printBox("ENDING: THE QUIET BETRAYAL");
         } else {

@@ -71,8 +71,12 @@ public class BrennanAct1 {
                     Printer.slowPrint("Old Iron Vow habits die hard. You sweep wide, using the smoke as cover.");
                     Printer.slowPrint("You emerge behind the leader, your sword at his back.");
                     story.setFlag("brennan_uses_tactics", true);
-                } else {
+                } else if (util.Dice.performSkillCheck("Stealth", 5)) {
                     Printer.slowPrint("You try to flank them, but a piece of burning wood cracks loudly under your boot.");
+                    Printer.slowPrint("The cultists spin around and spot you immediately.");
+                }
+                else if (util.Dice.performSkillCheck("Stealth", 1)) {
+                    Printer.slowPrint("You trip on the burning wood and fall face-first into the mud.");
                     Printer.slowPrint("The cultists spin around and spot you immediately.");
                 }
             }

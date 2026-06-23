@@ -1,4 +1,4 @@
-"# A-E-T-H-E-R-M-O-O-R
+#### A-E-T-H-E-R-M-O-O-R
 
 
 ## Core Premise
@@ -56,3 +56,24 @@ A seasoned independent ranger who used to guide patrols through the Greying's co
 * The danger of "cleansing" a wounded world
 * Whether broken people can still save others
 " 
+### Mechanics
+**Basic Structure:**
+* Text-based RPG with menu-driven choices.
+* Three distinct acts per character, each with multiple scenes.
+* Choices determine story flow, character relationships, and ending variations.
+* Core stats: Health (HP), Mana (MP), Attack (ATK), Defense (DEF), Speed (SPD).
+* Action points (AP) per turn in combat (default 3 AP, can be increased).
+* D20 skill checks for random events. and critical hits/misses.
+
+### Unique Mechanics Per Character
+
+#### Eryn Voss
+* **Raw Power:** Three charges of massive, uncontrolled magic. Using it too much might affect her ending.
+#### Brennan Ashvane / Caden Ashford
+* **Rage Mode:** Boosts attack for several turns at the cost of limiting other actions. lowers defense. may cause him to lose control and attack allies.
+#### Solia Ren
+* **Divine Prayer:** Heal and buff defense at the cost of limited faith points. lowering faith points may affect her ending.
+#### Mira Cael
+* **Shadow Strikes:** Critical hits and quick evasion. may cause her to lose control and attack allies. lowering trust with allies.
+#### Sera Caldwell
+* **Focused Shots:** Ranged attacks and traps. may cause her to lose control and attack allies. lowering trust with allies.

@@ -98,7 +98,7 @@ public class SoliaAct1 {
         System.out.println();
         System.out.println("  This changes everything. What do you do?\"");
         System.out.println("\"  1. Keep the medallion as evidence. Go to the city.\"");
-        System.out.println("\" 2. Destroy it. It feels wrong to touch.\"");
+        System.out.println("\"  2. Destroy it. It feels wrong to touch.\"");
         System.out.println("\"  3. Try to purify it yourself, right now.\"");
 
         int choice = InputHandler.getInt(1, 3);

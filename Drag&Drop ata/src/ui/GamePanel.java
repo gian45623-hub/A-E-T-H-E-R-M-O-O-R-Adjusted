@@ -159,7 +159,72 @@ public class GamePanel extends JPanel {
         musicToggleButton.setBounds(1216, 20, 130, 30);
         canvas.add(musicToggleButton);
 
+        JButton settingsButton = createStyledButton("Settings");
+        settingsButton.setFont(uiFont.deriveFont(11f));
+        settingsButton.addActionListener(e -> showSettingsDialog());
+        settingsButton.setBounds(1076, 20, 130, 30);
+        canvas.add(settingsButton);
+
         preloadImages();
+    }
+
+    private void showSettingsDialog() {
+        int choice = javax.swing.JOptionPane.showOptionDialog(this,
+            "Settings\n\nReturning to character select or skipping will lose your current progress.",
+            "Settings",
+            javax.swing.JOptionPane.YES_NO_CANCEL_OPTION,
+            javax.swing.JOptionPane.PLAIN_MESSAGE,
+            null,
+            new String[]{"Back to Character Select", "Skip to Ending", "Cancel"},
+            "Cancel");
+
+        if (choice == 0) {
+            stopMusic();
+            stopChoiceTimer();
+            // Clear textarea and context
+            textArea.setText("");
+            storyContext = "";
+            InputHandler.submitInput("RESTART_GAME_SIGNAL");
+        } else if (choice == 1) {
+            String selected = System.getProperty("aethermoor.selectedCharacter");
+            if (selected == null) selected = "Knight";
+            
+            String[] endings;
+            String[] keys;
+            if (selected.equals("Mage")) {
+                endings = new String[]{"The Blind Scholar", "The Reformer"};
+                keys = new String[]{"MAGE_BLIND", "MAGE_REFORMER"};
+            } else if (selected.equals("Knight")) {
+                endings = new String[]{"The Free Man", "The Arbiter"};
+                keys = new String[]{"KNIGHT_OUTCAST", "KNIGHT_ARBITER"};
+            } else if (selected.equals("Priest")) {
+                endings = new String[]{"From Ashes", "The New Flame"};
+                keys = new String[]{"PRIEST_ASHES", "PRIEST_FLAME"};
+            } else if (selected.equals("Mira")) {
+                endings = new String[]{"The Ghost", "The Price Paid", "Truth in the Open"};
+                keys = new String[]{"MIRA_GHOST", "MIRA_MERCHANT", "MIRA_TRUTH"};
+            } else { // Sera
+                endings = new String[]{"The Lone Road", "The Quiet Betrayal", "The Witness"};
+                keys = new String[]{"SERA_LONE_ROAD", "SERA_SILENCE", "SERA_WITNESS"};
+            }
+            
+            int endingChoice = javax.swing.JOptionPane.showOptionDialog(this,
+                "Select an ending to skip to:",
+                "Skip to Ending",
+                javax.swing.JOptionPane.DEFAULT_OPTION,
+                javax.swing.JOptionPane.PLAIN_MESSAGE,
+                null,
+                endings,
+                endings[0]);
+                
+            if (endingChoice >= 0) {
+                stopMusic();
+                stopChoiceTimer();
+                textArea.setText("");
+                storyContext = "";
+                InputHandler.submitInput("SKIP_ENDING:" + keys[endingChoice]);
+            }
+        }
     }
 
     public void cleanup() {
